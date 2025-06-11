@@ -3,10 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
     <title>Inicio</title>
 </head>
 <div th:replace="~{fragments/nav :: nav}"></div>
-<body>
+<body class="bg-pink-50 font-sans">
 
+<!-- Hero -->
+<section class="bg-gradient-to-r from-pink-100 via-pink-200 to-pink-50 py-16 animate-fadeIn">
+    <div class="container mx-auto text-center">
+        <h1 class="text-5xl font-extrabold text-pink-700 mb-4 drop-shadow-lg animate-bounce">Descubre tu Belleza Natural</h1>
+        <p class="text-lg text-pink-800 mb-6 animate-fadeIn delay-200">Productos de alta calidad para resaltar lo mejor de ti.</p>
+        <a href="#" class="bg-pink-600 text-white px-8 py-3 rounded-full font-semibold shadow-lg hover:bg-pink-700 transition transform hover:scale-105 duration-300 animate-pulse">Ver productos</a>
+    </div>
+</section>
+
+<!-- Productos destacados -->
+<section class="container mx-auto py-12">
+    <h2 class="text-3xl font-bold text-pink-700 mb-8 text-center animate-fadeInUp">Productos Destacados</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Producto 1 -->
+        <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center transform transition hover:scale-105 hover:shadow-2xl duration-300 animate-fadeInUp">
+            <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=400&q=80" alt="Labial" class="w-32 h-32 object-cover rounded-full mb-4 shadow-md hover:shadow-pink-200 transition duration-300">
+            <h3 class="text-lg font-semibold text-pink-700 mb-2">Labial Mate</h3>
+            <p class="text-gray-600 mb-4 text-center">Colores intensos y larga duración.</p>
+            <span class="text-pink-600 font-bold text-xl mb-2">$120</span>
+            <button class="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 transition transform hover:scale-110 duration-300 mt-2">Agregar al carrito</button>
+        </div>
+        <!-- Producto 2 -->
+        <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center transform transition hover:scale-105 hover:shadow-2xl duration-300 animate-fadeInUp delay-100">
+            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Base" class="w-32 h-32 object-cover rounded-full mb-4 shadow-md hover:shadow-pink-200 transition duration-300">
+            <h3 class="text-lg font-semibold text-pink-700 mb-2">Base Líquida</h3>
+            <p class="text-gray-600 mb-4 text-center">Cobertura perfecta y acabado natural.</p>
+            <span class="text-pink-600 font-bold text-xl mb-2">$250</span>
+            <button class="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 transition transform hover:scale-110 duration-300 mt-2">Agregar al carrito</button>
+        </div>
+        <!-- Producto 3 -->
+        <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center transform transition hover:scale-105 hover:shadow-2xl duration-300 animate-fadeInUp delay-200">
+            <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" alt="Paleta de sombras" class="w-32 h-32 object-cover rounded-full mb-4 shadow-md hover:shadow-pink-200 transition duration-300">
+            <h3 class="text-lg font-semibold text-pink-700 mb-2">Paleta de Sombras</h3>
+            <p class="text-gray-600 mb-4 text-center">Tonos vibrantes para cada ocasión.</p>
+            <span class="text-pink-600 font-bold text-xl mb-2">$320</span>
+            <button class="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 transition transform hover:scale-110 duration-300 mt-2">Agregar al carrito</button>
+        </div>
+    </div>
+</section>
+<!-- Galería/Carrusel de productos -->
+<section class="container mx-auto py-12">
+    <h2 class="text-2xl font-bold text-pink-700 mb-8 text-center animate-fadeInUp">Galería de Novedades</h2>
+    <div id="gallery-carousel" class="relative w-full max-w-3xl mx-auto" data-carousel="slide">
+        <!-- Carousel wrapper -->
+        <div class="relative h-64 overflow-hidden rounded-lg">
+            <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80" class="absolute block w-full h-full object-cover" alt="Producto 1">
+            </div>
+            <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80" class="absolute block w-full h-full object-cover" alt="Producto 2">
+            </div>
+            <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80" class="absolute block w-full h-full object-cover" alt="Producto 3">
+            </div>
+        </div>
+        <!-- Slider controls -->
+        <button type="button" class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/80 group-hover:bg-white/100">
+                <svg class="w-6 h-6 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+            </span>
+        </button>
+        <button type="button" class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
+            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/80 group-hover:bg-white/100">
+                <svg class="w-6 h-6 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            </span>
+        </button>
+    </div>
+</section>
+
+<!-- Testimonios -->
+<section class="bg-pink-100 py-12 animate-fadeIn">
+    <h2 class="text-2xl font-bold text-pink-700 mb-8 text-center">Testimonios</h2>
+    <div class="flex flex-col md:flex-row justify-center items-center gap-8">
+        <div class="bg-white rounded-lg shadow-lg p-6 max-w-xs text-center transition hover:scale-105 duration-300">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Cliente" class="w-16 h-16 rounded-full mx-auto mb-4">
+            <p class="text-gray-700 italic mb-2">"¡Me encantan los productos! Mi piel luce radiante y natural."</p>
+            <span class="text-pink-600 font-semibold">Ana G.</span>
+        </div>
+        <div class="bg-white rounded-lg shadow-lg p-6 max-w-xs text-center transition hover:scale-105 duration-300">
+            <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Cliente" class="w-16 h-16 rounded-full mx-auto mb-4">
+            <p class="text-gray-700 italic mb-2">"La atención es excelente y los envíos muy rápidos."</p>
+            <span class="text-pink-600 font-semibold">María P.</span>
+        </div>
+        <div class="bg-white rounded-lg shadow-lg p-6 max-w-xs text-center transition hover:scale-105 duration-300">
+            <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Cliente" class="w-16 h-16 rounded-full mx-auto mb-4">
+            <p class="text-gray-700 italic mb-2">"Recomiendo la paleta de sombras, ¡colores hermosos!"</p>
+            <span class="text-pink-600 font-semibold">Lucía R.</span>
+        </div>
+    </div>
+</section>
+<!-- Sección de Suscripción -->
+<section class="bg-pink-200 py-12 animate-fadeInUp">
+    <div class="container mx-auto text-center">
+        <h2 class="text-2xl font-bold text-pink-700 mb-4">¡Suscríbete y recibe ofertas exclusivas!</h2>
+        <form class="flex flex-col md:flex-row justify-center items-center gap-4">
+            <input type="email" placeholder="Tu correo electrónico" required class="px-4 py-2 rounded-full border-2 border-pink-400 focus:outline-none focus:ring-2 focus:ring-pink-500 transition w-72">
+            <button type="submit" class="bg-pink-600 text-white px-6 py-2 rounded-full font-semibold shadow hover:bg-pink-700 transition transform hover:scale-105 duration-300">Suscribirme</button>
+        </form>
+    </div>
+</section>
+
+<!-- Sección FAQ -->
+<section class="container mx-auto py-12">
+    <h2 class="text-2xl font-bold text-pink-700 mb-8 text-center">Preguntas Frecuentes</h2>
+    <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-pink-100 text-pink-700" class="max-w-2xl mx-auto">
+        <h3>
+            <button type="button" class="flex justify-between items-center w-full py-4 font-medium text-left text-gray-700 border-b border-gray-200" data-accordion-target="#faq1" aria-expanded="true" aria-controls="faq1">
+                ¿Cuánto tarda el envío?
+                <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08z" clip-rule="evenodd"/></svg>
+            </button>
+        </h3>
+        <div id="faq1" class="hidden">
+            <div class="py-4 text-gray-600">El envío tarda entre 2 y 5 días hábiles según tu ubicación.</div>
+        </div>
+        <h3>
+            <button type="button" class="flex justify-between items-center w-full py-4 font-medium text-left text-gray-700 border-b border-gray-200" data-accordion-target="#faq2" aria-expanded="false" aria-controls="faq2">
+                ¿Puedo pagar contra entrega?
+                <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08z" clip-rule="evenodd"/></svg>
+            </button>
+        </h3>
+        <div id="faq2" class="hidden">
+            <div class="py-4 text-gray-600">Sí, aceptamos pago contra entrega en ciertas ciudades.</div>
+        </div>
+        <h3>
+            <button type="button" class="flex justify-between items-center w-full py-4 font-medium text-left text-gray-700 border-b border-gray-200" data-accordion-target="#faq3" aria-expanded="false" aria-controls="faq3">
+                ¿Los productos son originales?
+                <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08z" clip-rule="evenodd"/></svg>
+            </button>
+        </h3>
+        <div id="faq3" class="hidden">
+            <div class="py-4 text-gray-600">Todos nuestros productos son 100% originales y certificados.</div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .animate-fadeIn { animation: fadeIn 1s ease-in; }
+    .animate-fadeInUp { animation: fadeInUp 1s ease-in; }
+    .animate-fadeInDown { animation: fadeInDown 1s ease-in; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px);} to { opacity: 1; transform: translateY(0);} }
+    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-40px);} to { opacity: 1; transform: translateY(0);} }
+</style>
 </body>
+<div th:replace="~{fragments/footer :: footer}"></div>
 </html>
