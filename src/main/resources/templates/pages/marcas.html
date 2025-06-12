@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    <title>Essences AL | Marcas Destacadas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom animations from index.html for consistency */
+        .animate-fadeIn { animation: fadeIn 1s ease-out forwards; opacity: 0; }
+        .animate-fadeInUp { animation: fadeInUp 1s ease-out forwards; opacity: 0; }
+        .animate-zoomIn { animation: zoomIn 1s ease-out forwards; opacity: 0; }
+        .animate-slideInLeft { animation: slideInLeft 1s ease-out forwards; opacity: 0; }
+        .animate-slideInRight { animation: slideInRight 1s ease-out forwards; opacity: 0; }
+        .animate-pulse-custom { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px);} to { opacity: 1; transform: translateY(0);} }
+        @keyframes zoomIn { from { opacity: 0; transform: scale(0.9);} to { opacity: 1; transform: scale(1);} }
+        @keyframes slideInLeft { from { opacity: 0; transform: translateX(-60px);} to { opacity: 1; transform: translateX(0);} }
+        @keyframes slideInRight { from { opacity: 0; transform: translateX(60px);} to { opacity: 1; transform: translateX(0);} }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .7; }
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Delay for sequential animations */
+        .delay-100ms { animation-delay: 0.1s; }
+        .delay-200ms { animation-delay: 0.2s; }
+        .delay-300ms { animation-delay: 0.3s; }
+        .delay-400ms { animation-delay: 0.4s; }
+        .delay-500ms { animation-delay: 0.5s; }
+        .delay-600ms { animation-delay: 0.6s; }
+        .delay-700ms { animation-delay: 0.7s; }
+        .delay-800ms { animation-delay: 0.8s; }
+        .delay-900ms { animation-delay: 0.9s; }
+        .delay-1000ms { animation-delay: 1s; }
+
+        /* Custom pink shades for consistency and readability */
+        .bg-primary-pink { background-color: #e91e63; } /* Stronger pink for primary elements */
+        .hover\:bg-primary-pink-dark:hover { background-color: #c2185b; } /* Darker on hover */
+        .text-primary-pink { color: #e91e63; } /* Strong pink for main headings/text */
+        .bg-secondary-pink { background-color: #f8bbd0; } /* Lighter pink for secondary backgrounds */
+        .text-secondary-pink { color: #f06292; } /* Slightly softer pink for secondary text */
+        .border-primary-pink-light { border-color: #fbcfe8; } /* Very light pink for borders */
+        .focus\:ring-primary-pink:focus { --tw-ring-color: #f06292; } /* Focus ring */
+
+        /* Font styles */
+        .font-playfair { font-family: 'Playfair Display', serif; }
+        .font-montserrat { font-family: 'Montserrat', sans-serif; }
+
+        /* Responsive adjustments for headings */
+        @media (max-width: 767px) {
+            .text-6xl-mobile { font-size: 3.25rem; }
+            .text-5xl-mobile { font-size: 2.5rem; }
+            .text-xl-mobile { font-size: 1.125rem; }
+            .text-lg-mobile { font-size: 1rem; }
+        }
+
+        /* Specific styles for brand cards */
+        .brand-card-img {
+            max-height: 120px; /* Adjust max height for logos */
+            width: auto; /* Maintain aspect ratio */
+            object-fit: contain; /* Ensure logo fits without cropping */
+            filter: grayscale(80%); /* Initially more subdued */
+            transition: all 0.3s ease-in-out;
+        }
+
+        .brand-card:hover .brand-card-img {
+            filter: grayscale(0%); /* Full color on hover */
+            transform: scale(1.1); /* Slight zoom on hover */
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-pink-50 to-purple-50 font-montserrat text-gray-800 antialiased">
+
+<div th:replace="~{fragments/nav :: nav}"></div>
+
+<section class="relative overflow-hidden bg-gradient-to-br from-pink-100 via-pink-200 to-purple-100 py-24 md:py-32 flex items-center justify-center">
+    <div class="absolute inset-0 z-0 opacity-40">
+        <img th:src="@{/imagenes/marca.jpg}" alt="Elegant cosmetic background" class="w-full h-full object-cover">
+    </div>
+    <div class="container mx-auto text-center px-6 md:px-12 z-10">
+        <h1 class="text-6xl-mobile md:text-7xl font-playfair font-bold text-primary-pink mb-8 leading-tight drop-shadow-xl animate-fadeInUp">
+            Nuestras Marcas <span class="text-purple-700">Aliadas</span>
+        </h1>
+        <br>
+        <a href="#brand-list" class="inline-block bg-primary-pink text-white px-10 py-4 rounded-full font-bold text-xl shadow-2xl hover:bg-primary-pink-dark transition transform hover:scale-105 duration-300 animate-zoomIn delay-700ms">
+            <i class="fas fa-hand-holding-heart mr-3"></i> Descubre Quién Nos Respalda
+        </a>
+    </div>
+</section>
+
+<section id="brand-list" class="container mx-auto py-24 px-6 md:px-12">
+    <h2 class="text-5xl-mobile md:text-5xl font-playfair font-bold text-primary-pink mb-16 text-center animate-fadeInUp">
+        Explora por tu Marca Favorita
+    </h2>
+    <br>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-16"> <div class="bg-white rounded-3xl shadow-xl p-8 flex flex-col items-center text-center transform transition hover:scale-105 hover:shadow-2xl duration-300 animate-fadeInUp delay-100ms brand-card">
+        <img th:src="@{/imagenes/loreal.jpg}" alt="L'Oréal Paris Logo" class="brand-card-img mb-6">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-3">L'Oréal Paris</h3>
+        <p class="text-gray-600 text-lg-mobile leading-snug mb-4 line-clamp-3">
+            Líder mundial en belleza, L'Oréal Paris ofrece una gama completa de maquillaje, cuidado de la piel y capilar con innovaciones científicas.
+        </p>
+        <a th:href="@{https://www.lorealparisusa.com/}" target="_blank" class="mt-auto bg-primary-pink text-white px-8 py-3 rounded-full font-semibold text-md shadow-lg hover:bg-primary-pink-dark transition transform hover:scale-105 duration-300">
+            Ver Productos <i class="fas fa-arrow-right ml-2"></i>
+        </a>
+    </div>
+
+        <div class="bg-white rounded-3xl shadow-xl p-8 flex flex-col items-center text-center transform transition hover:scale-105 hover:shadow-2xl duration-300 animate-fadeInUp delay-200ms brand-card">
+            <img th:src="@{/imagenes/maybelline.png}" alt="Maybelline New York Logo" class="brand-card-img mb-6">
+            <h3 class="text-2xl font-semibold text-gray-800 mb-3">Maybelline New York</h3>
+            <p class="text-gray-600 text-lg-mobile leading-snug mb-4 line-clamp-3">
+                Desde las pasarelas hasta las calles, Maybelline trae tendencias de maquillaje con fórmulas innovadoras y asequibles para todos.
+            </p>
+            <a href="https://www.maybelline.com/" target="_blank" class="mt-auto bg-primary-pink text-white px-8 py-3 rounded-full font-semibold text-md shadow-lg hover:bg-primary-pink-dark transition transform hover:scale-105 duration-300">
+                Ver Productos <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
+        <div class="bg-white rounded-3xl shadow-xl p-8 flex flex-col items-center text-center transform transition hover:scale-105 hover:shadow-2xl duration-300 animate-fadeInUp delay-300ms brand-card">
+            <img th:src="@{/imagenes/revlon.png}" alt="Revlon Logo" class="brand-card-img mb-6">
+            <h3 class="text-2xl font-semibold text-gray-800 mb-3">Revlon</h3>
+            <p class="text-gray-600 text-lg-mobile leading-snug mb-4 line-clamp-3">
+                Icono de la belleza global, Revlon ofrece maquillaje atemporal, fragancias y cuidado de la piel que celebran la confianza.
+            </p>
+            <a href="https://www.revlon.com/" target="_blank" class="mt-auto bg-primary-pink text-white px-8 py-3 rounded-full font-semibold text-md shadow-lg hover:bg-primary-pink-dark transition transform hover:scale-105 duration-300">
+                Ver Productos <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
+        <div class="bg-white rounded-3xl shadow-xl p-8 flex flex-col items-center text-center transform transition hover:scale-105 hover:shadow-2xl duration-300 animate-fadeInUp delay-400ms brand-card">
+            <img th:src="@{/imagenes/nyx.png}" alt="NYX Professional Makeup Logo" class="brand-card-img mb-6">
+            <h3 class="text-2xl font-semibold text-gray-800 mb-3">NYX Professional Makeup</h3>
+            <p class="text-gray-600 text-lg-mobile leading-snug mb-4 line-clamp-3">
+                Maquillaje profesional accesible para todos. NYX es amado por su calidad, pigmentación y variedad de tonos.
+            </p>
+            <a href="https://www.nyxcosmetics.com/" target="_blank" class="mt-auto bg-primary-pink text-white px-8 py-3 rounded-full font-semibold text-md shadow-lg hover:bg-primary-pink-dark transition transform hover:scale-105 duration-300">
+                Ver Productos <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
+        <div class="bg-white rounded-3xl shadow-xl p-8 flex flex-col items-center text-center transform transition hover:scale-105 hover:shadow-2xl duration-300 animate-fadeInUp delay-500ms brand-card">
+            <img th:src="@{/imagenes/fenty.png}" alt="Fenty Beauty Logo" class="brand-card-img mb-6">
+            <h3 class="text-2xl font-semibold text-gray-800 mb-3">Fenty Beauty</h3>
+            <p class="text-gray-600 text-lg-mobile leading-snug mb-4 line-clamp-3">
+                Creada por Rihanna, Fenty Beauty se destaca por su inclusividad y fórmulas de alto rendimiento para todos los tonos de piel.
+            </p>
+            <a href="https://fentybeauty.com/" target="_blank" class="mt-auto bg-primary-pink text-white px-8 py-3 rounded-full font-semibold text-md shadow-lg hover:bg-primary-pink-dark transition transform hover:scale-105 duration-300">
+                Ver Productos <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
+        <div class="bg-white rounded-3xl shadow-xl p-8 flex flex-col items-center text-center transform transition hover:scale-105 hover:shadow-2xl duration-300 animate-fadeInUp delay-600ms brand-card">
+            <img th:src="@{/imagenes/mac.jpg}" alt="MAC Cosmetics Logo" class="brand-card-img mb-6">
+            <h3 class="text-2xl font-semibold text-gray-800 mb-3">MAC Cosmetics</h3>
+            <p class="text-gray-600 text-lg-mobile leading-snug mb-4 line-clamp-3">
+                Un referente en maquillaje profesional, MAC es conocido por sus productos icónicos y su colaboración con artistas.
+            </p>
+            <a href="https://www.maccosmetics.com/" target="_blank" class="mt-auto bg-primary-pink text-white px-8 py-3 rounded-full font-semibold text-md shadow-lg hover:bg-primary-pink-dark transition transform hover:scale-105 duration-300">
+                Ver Productos <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
+        <div class="bg-white rounded-3xl shadow-xl p-8 flex flex-col items-center text-center transform transition hover:scale-105 hover:shadow-2xl duration-300 animate-fadeInUp delay-700ms brand-card">
+            <img th:src="@{/imagenes/dior.svg}" alt="Dior Beauty Logo" class="brand-card-img mb-6">
+            <h3 class="text-2xl font-semibold text-gray-800 mb-3">Dior Beauty</h3>
+            <p class="text-gray-600 text-lg-mobile leading-snug mb-4 line-clamp-3">
+                Lujo y sofisticación en cada producto. Dior Beauty ofrece maquillaje, fragancias y cuidado de la piel de alta costura.
+            </p>
+            <a href="https://www.dior.com/en_us/beauty" target="_blank" class="mt-auto bg-primary-pink text-white px-8 py-3 rounded-full font-semibold text-md shadow-lg hover:bg-primary-pink-dark transition transform hover:scale-105 duration-300">
+                Ver Productos <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
+        <div class="bg-white rounded-3xl shadow-xl p-8 flex flex-col items-center text-center transform transition hover:scale-105 hover:shadow-2xl duration-300 animate-fadeInUp delay-800ms brand-card">
+            <img th:src="@{/imagenes/nars.png}" alt="NARS Cosmetics Logo" class="brand-card-img mb-6">
+            <h3 class="text-2xl font-semibold text-gray-800 mb-3">NARS Cosmetics</h3>
+            <p class="text-gray-600 text-lg-mobile leading-snug mb-4 line-clamp-3">
+                Audacia y expresión personal. NARS es famoso por sus tonos icónicos y fórmulas de vanguardia que inspiran a la creatividad.
+            </p>
+            <a href="https://www.narscosmetics.com/" target="_blank" class="mt-auto bg-primary-pink text-white px-8 py-3 rounded-full font-semibold text-md shadow-lg hover:bg-primary-pink-dark transition transform hover:scale-105 duration-300">
+                Ver Productos <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
+        <div class="bg-white rounded-3xl shadow-xl p-8 flex flex-col items-center text-center transform transition hover:scale-105 hover:shadow-2xl duration-300 animate-fadeInUp delay-900ms brand-card">
+            <img th:src="@{/imagenes/too.png}" alt="Too Faced Logo" class="brand-card-img mb-6">
+            <h3 class="text-2xl font-semibold text-gray-800 mb-3">Too Faced</h3>
+            <p class="text-gray-600 text-lg-mobile leading-snug mb-4 line-clamp-3">
+                Divertida y fabulosa, Too Faced crea productos innovadores y con empaques irresistibles. ¡Maquillaje para soñar!
+            </p>
+            <a href="https://www.toofaced.com/" target="_blank" class="mt-auto bg-primary-pink text-white px-8 py-3 rounded-full font-semibold text-md shadow-lg hover:bg-primary-pink-dark transition transform hover:scale-105 duration-300">
+                Ver Productos <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="bg-primary-pink py-24 px-6 md:px-12 text-white text-center animate-fadeIn">
+    <div class="container mx-auto max-w-5xl">
+        <h2 class="text-5xl-mobile md:text-6xl font-playfair font-bold mb-10 drop-shadow-lg">
+            ¡Descubre la Calidad que Amas!
+        </h2>
+        <p class="text-lg md:text-xl mb-14 max-w-3xl mx-auto opacity-90 leading-relaxed">
+            Explora las colecciones completas de tus marcas favoritas y encuentra el producto perfecto para ti.
+        </p>
+    </div>
+</section>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+</html>

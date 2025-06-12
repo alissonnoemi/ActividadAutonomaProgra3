@@ -9,4 +9,8 @@ public class IndexController {
     public String mostrarHome() {
         return "index";
     }
+    @GetMapping ("/marcas")
+    public String mostrarMarcas() {
+        return "pages/marcas";
+    }
 }

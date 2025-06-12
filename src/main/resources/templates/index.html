@@ -2,156 +2,596 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
-    <title>Inicio</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+    <title>Essences AL | Tu Belleza al Natural</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom animations for a smoother visual experience */
+        .animate-fadeIn { animation: fadeIn 1s ease-out forwards; opacity: 0; }
+        .animate-fadeInUp { animation: fadeInUp 1s ease-out forwards; opacity: 0; }
+        .animate-zoomIn { animation: zoomIn 1s ease-out forwards; opacity: 0; }
+        .animate-slideInLeft { animation: slideInLeft 1s ease-out forwards; opacity: 0; }
+        .animate-slideInRight { animation: slideInRight 1s ease-out forwards; opacity: 0; }
+        .animate-pulse-custom { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px);} to { opacity: 1; transform: translateY(0);} }
+        @keyframes zoomIn { from { opacity: 0; transform: scale(0.9);} to { opacity: 1; transform: scale(1);} }
+        @keyframes slideInLeft { from { opacity: 0; transform: translateX(-60px);} to { opacity: 1; transform: translateX(0);} }
+        @keyframes slideInRight { from { opacity: 0; transform: translateX(60px);} to { opacity: 1; transform: translateX(0);} }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .7; }
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Delay for sequential animations */
+        .delay-100ms { animation-delay: 0.1s; }
+        .delay-200ms { animation-delay: 0.2s; }
+        .delay-300ms { animation-delay: 0.3s; }
+        .delay-400ms { animation-delay: 0.4s; }
+        .delay-500ms { animation-delay: 0.5s; }
+        .delay-600ms { animation-delay: 0.6s; }
+        .delay-700ms { animation-delay: 0.7s; }
+        .delay-800ms { animation-delay: 0.8s; }
+        .delay-900ms { animation-delay: 0.9s; }
+        .delay-1000ms { animation-delay: 1s; }
+
+        /* Custom pink shades for consistency and readability */
+        .bg-primary-pink { background-color: #e91e63; } /* Stronger pink for primary elements */
+        .hover\:bg-primary-pink-dark:hover { background-color: #c2185b; } /* Darker on hover */
+        .text-primary-pink { color: #e91e63; } /* Strong pink for main headings/text */
+        .bg-secondary-pink { background-color: #f8bbd0; } /* Lighter pink for secondary backgrounds */
+        .text-secondary-pink { color: #f06292; } /* Slightly softer pink for secondary text */
+        .border-primary-pink-light { border-color: #fbcfe8; } /* Very light pink for borders */
+        .focus\:ring-primary-pink:focus { --tw-ring-color: #f06292; } /* Focus ring */
+
+        /* Font styles */
+        .font-playfair { font-family: 'Playfair Display', serif; }
+        .font-montserrat { font-family: 'Montserrat', sans-serif; }
+
+        /* Specific styles for product cards for consistent hover */
+        .product-card-hover:hover .product-card-img {
+            box-shadow: 0 0 0 5px #f8bbd0, 0 0 0 10px #fce4ec; /* Double ring on hover */
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        /* Responsive adjustments for headings */
+        @media (max-width: 767px) {
+            .text-6xl-mobile { font-size: 3.25rem; }
+            .text-5xl-mobile { font-size: 2.5rem; }
+            .text-xl-mobile { font-size: 1.125rem; }
+            .text-lg-mobile { font-size: 1rem; }
+        }
+
+        /* Custom style for category icons to match the image */
+        .category-icon {
+            display: inline-flex; /* Use inline-flex to center content horizontally and vertically */
+            align-items: center;
+            justify-content: center;
+            width: 80px; /* Slightly smaller for icon feel */
+            height: 80px; /* Slightly smaller for icon feel */
+            background-color: #fce4ec; /* A very light pink background for the icon circle */
+            border-radius: 50%;
+            margin-bottom: 1.5rem; /* Space between icon and title */
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .category-icon i {
+            color: #e91e63; /* Primary pink for the icon itself */
+            font-size: 3rem; /* Large icon size */
+        }
+
+        .group:hover .category-icon {
+            transform: scale(1.1); /* Slightly enlarge icon on hover */
+            background-color: #f8bbd0; /* Slightly darker pink on hover */
+        }
+    </style>
 </head>
+<body class="bg-gradient-to-br from-pink-50 to-purple-50 font-montserrat text-gray-800 antialiased">
+
 <div th:replace="~{fragments/nav :: nav}"></div>
-<body class="bg-pink-50 font-sans">
 
-<!-- Hero -->
-<section class="bg-gradient-to-r from-pink-100 via-pink-200 to-pink-50 py-16 animate-fadeIn">
-    <div class="container mx-auto text-center">
-        <h1 class="text-5xl font-extrabold text-pink-700 mb-4 drop-shadow-lg animate-bounce">Descubre tu Belleza Natural</h1>
-        <p class="text-lg text-pink-800 mb-6 animate-fadeIn delay-200">Productos de alta calidad para resaltar lo mejor de ti.</p>
-        <a href="#" class="bg-pink-600 text-white px-8 py-3 rounded-full font-semibold shadow-lg hover:bg-pink-700 transition transform hover:scale-105 duration-300 animate-pulse">Ver productos</a>
+<section class="relative overflow-hidden bg-gradient-to-br from-pink-100 via-pink-200 to-purple-100 py-32 md:py-48 flex items-center justify-center min-h-screen">
+    <div class="absolute inset-0 z-0 opacity-20">
+        <img th:src="@{/imagenes/img2.jpg}" class="w-full h-full object-cover">
+    </div>
+
+    <div class="container mx-auto text-center px-6 md:px-12 z-10">
+        <h1 class="text-6xl-mobile md:text-8xl font-playfair font-bold text-primary-pink mb-8 leading-tight drop-shadow-xl animate-fadeInUp">
+            <br>
+            ¡Descubre tu Belleza Esencial!
+        </h1>
+        <p class="text-xl-mobile md:text-3xl text-black-900 max-w-5xl mx-auto mb-12 animate-fadeIn delay-300ms leading-relaxed font-semibold">
+            En Essences AL, te invitamos a un viaje donde la naturaleza se encuentra con la elegancia.
+            Encuentra productos orgánicos, éticos y de alta calidad que realzan tu resplandor único y nutren tu piel con amor.
+        </p>
+        <br>
+        <div class="flex flex-col sm:flex-row justify-center items-center gap-8 animate-zoomIn delay-700ms">
+            <a href="/productos" class="inline-block bg-primary-pink text-white px-12 py-5 rounded-full font-bold text-xl shadow-2xl hover:bg-primary-pink-dark transition transform hover:scale-105 duration-300 animate-pulse-custom">
+                <i class="fas fa-sparkles mr-3"></i> Explora la Colección
+            </a>
+            <a href="/nosotros" class="inline-block bg-white text-primary-pink border-4 border-primary-pink px-12 py-5 rounded-full font-bold text-xl shadow-2xl hover:bg-primary-pink-light transition transform hover:scale-105 duration-300">
+                <i class="fas fa-gem mr-3"></i> Nuestra Filosofía
+            </a>
+
+        </div>
+        <br>
     </div>
 </section>
-
-<!-- Productos destacados -->
-<section class="container mx-auto py-12">
-    <h2 class="text-3xl font-bold text-pink-700 mb-8 text-center animate-fadeInUp">Productos Destacados</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <!-- Producto 1 -->
-        <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center transform transition hover:scale-105 hover:shadow-2xl duration-300 animate-fadeInUp">
-            <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=400&q=80" alt="Labial" class="w-32 h-32 object-cover rounded-full mb-4 shadow-md hover:shadow-pink-200 transition duration-300">
-            <h3 class="text-lg font-semibold text-pink-700 mb-2">Labial Mate</h3>
-            <p class="text-gray-600 mb-4 text-center">Colores intensos y larga duración.</p>
-            <span class="text-pink-600 font-bold text-xl mb-2">$120</span>
-            <button class="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 transition transform hover:scale-110 duration-300 mt-2">Agregar al carrito</button>
+<section class="container mx-auto py-24 px-6 md:px-12">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div class="animate-slideInLeft delay-100ms">
+            <img th:src="@{/imagenes/img3.jpg}"  alt="About Essences AL" class="rounded-3xl shadow-2xl w-full h-auto object-cover transform hover:scale-102 transition-transform duration-500">
         </div>
-        <!-- Producto 2 -->
-        <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center transform transition hover:scale-105 hover:shadow-2xl duration-300 animate-fadeInUp delay-100">
-            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Base" class="w-32 h-32 object-cover rounded-full mb-4 shadow-md hover:shadow-pink-200 transition duration-300">
-            <h3 class="text-lg font-semibold text-pink-700 mb-2">Base Líquida</h3>
-            <p class="text-gray-600 mb-4 text-center">Cobertura perfecta y acabado natural.</p>
-            <span class="text-pink-600 font-bold text-xl mb-2">$250</span>
-            <button class="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 transition transform hover:scale-110 duration-300 mt-2">Agregar al carrito</button>
-        </div>
-        <!-- Producto 3 -->
-        <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center transform transition hover:scale-105 hover:shadow-2xl duration-300 animate-fadeInUp delay-200">
-            <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" alt="Paleta de sombras" class="w-32 h-32 object-cover rounded-full mb-4 shadow-md hover:shadow-pink-200 transition duration-300">
-            <h3 class="text-lg font-semibold text-pink-700 mb-2">Paleta de Sombras</h3>
-            <p class="text-gray-600 mb-4 text-center">Tonos vibrantes para cada ocasión.</p>
-            <span class="text-pink-600 font-bold text-xl mb-2">$320</span>
-            <button class="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 transition transform hover:scale-110 duration-300 mt-2">Agregar al carrito</button>
+        <div class="text-center lg:text-left animate-slideInRight delay-200ms">
+            <h2 class="text-5xl-mobile md:text-5xl font-playfair font-bold text-primary-pink mb-8 leading-tight">
+                El Compromiso de Essences AL
+            </h2>
+            <br>
+            <p class="text-lg md:text-xl text-gray-700 mb-6 leading-relaxed">
+                Nuestra misión es empoderarte a través de la belleza consciente. Seleccionamos cuidadosamente cada producto
+                para asegurar que sean **naturales, sostenibles y efectivos**. Creemos en una belleza que te hace sentir
+                bien por dentro y por fuera.
+            </p>
+            <ul class="text-lg text-gray-700 space-y-3 mb-8">
+                <li class="flex items-center justify-center lg:justify-start">
+                    <i class="fas fa-check-circle text-green-500 mr-3 text-xl"></i>
+                    Fórmulas con ingredientes 100% naturales.
+                </li>
+                <li class="flex items-center justify-center lg:justify-start">
+                    <i class="fas fa-leaf text-green-500 mr-3 text-xl"></i>
+                    Empaques ecológicos y sostenibles.
+                </li>
+                <li class="flex items-center justify-center lg:justify-start">
+                    <i class="fas fa-hand-holding-heart text-green-500 mr-3 text-xl"></i>
+                    Compromiso con el bienestar animal (Cruelty-Free).
+                </li>
+            </ul>
+            <a href="/valores" class="inline-block bg-primary-pink text-white px-10 py-4 rounded-full font-semibold text-lg shadow-xl hover:bg-primary-pink-dark transition transform hover:scale-105 duration-300">
+                <i class="fas fa-heart-circle-check mr-2"></i> Conoce Más de Nosotros
+            </a>
         </div>
     </div>
 </section>
-<!-- Galería/Carrusel de productos -->
-<section class="container mx-auto py-12">
-    <h2 class="text-2xl font-bold text-pink-700 mb-8 text-center animate-fadeInUp">Galería de Novedades</h2>
-    <div id="gallery-carousel" class="relative w-full max-w-3xl mx-auto" data-carousel="slide">
-        <!-- Carousel wrapper -->
-        <div class="relative h-64 overflow-hidden rounded-lg">
-            <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80" class="absolute block w-full h-full object-cover" alt="Producto 1">
+<section class="bg-gradient-to-br from-secondary-pink to-pink-100 py-24 px-6 md:px-12">
+    <div class="container mx-auto">
+        <h2 class="text-5xl-mobile md:text-5xl font-playfair font-bold text-primary-pink mb-16 text-center animate-fadeInUp">
+            ¿Por qué Elegir la Experiencia Essences AL?
+            <br>
+        </h2>
+        <br>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+            <div class="bg-white rounded-3xl shadow-xl p-8 text-center animate-fadeInUp delay-100ms transform transition hover:scale-105 duration-300 group">
+                <div class="text-primary-pink text-6xl mb-6 group-hover:text-purple-700 transition-colors duration-300 animate-float">
+                    <i class="fas fa-seedling"></i>
+                </div>
+                <h3 class="text-2xl font-semibold text-gray-800 mb-3 group-hover:text-primary-pink transition-colors duration-300">Ingredientes Naturales</h3>
+                <p class="text-gray-600 leading-relaxed text-lg-mobile">
+                    Fórmulas puras y suaves, directamente de la naturaleza para tu piel.
+                </p>
             </div>
-            <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80" class="absolute block w-full h-full object-cover" alt="Producto 2">
+            <div class="bg-white rounded-3xl shadow-xl p-8 text-center animate-fadeInUp delay-200ms transform transition hover:scale-105 duration-300 group">
+                <div class="text-primary-pink text-6xl mb-6 group-hover:text-purple-700 transition-colors duration-300 animate-float delay-100ms">
+                    <i class="fas fa-paw"></i>
+                </div>
+                <h3 class="text-2xl font-semibold text-gray-800 mb-3 group-hover:text-primary-pink transition-colors duration-300">Ético y Consciente</h3>
+                <p class="text-gray-600 leading-relaxed text-lg-mobile">
+                    Productos Cruelty-Free, sin testeos en animales. Belleza con corazón.
+                </p>
             </div>
-            <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80" class="absolute block w-full h-full object-cover" alt="Producto 3">
+            <div class="bg-white rounded-3xl shadow-xl p-8 text-center animate-fadeInUp delay-300ms transform transition hover:scale-105 duration-300 group">
+                <div class="text-primary-pink text-6xl mb-6 group-hover:text-purple-700 transition-colors duration-300 animate-float delay-200ms">
+                    <i class="fas fa-award"></i>
+                </div>
+                <h3 class="text-2xl font-semibold text-gray-800 mb-3 group-hover:text-primary-pink transition-colors duration-300">Calidad Superior</h3>
+                <p class="text-gray-600 leading-relaxed text-lg-mobile">
+                    Selección de las mejores marcas, garantizando resultados impecables y duraderos.
+                </p>
+            </div>
+            <div class="bg-white rounded-3xl shadow-xl p-8 text-center animate-fadeInUp delay-400ms transform transition hover:scale-105 duration-300 group">
+                <div class="text-primary-pink text-6xl mb-6 group-hover:text-purple-700 transition-colors duration-300 animate-float delay-300ms">
+                    <i class="fas fa-truck-fast"></i>
+                </div>
+                <h3 class="text-2xl font-semibold text-gray-800 mb-3 group-hover:text-primary-pink transition-colors duration-300">Entrega Rápida</h3>
+                <p class="text-gray-600 leading-relaxed text-lg-mobile">
+                    Recibe tus favoritos en la comodidad de tu hogar, de forma segura y eficiente.
+                </p>
             </div>
         </div>
-        <!-- Slider controls -->
-        <button type="button" class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/80 group-hover:bg-white/100">
-                <svg class="w-6 h-6 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+        <div class="text-center mt-16 animate-fadeInUp delay-500ms">
+            <a href="/valores" class="inline-block text-primary-pink hover:text-primary-pink-dark font-bold text-xl border-b-4 border-primary-pink hover:border-primary-pink-dark pb-1 transition duration-300 px-8 py-3 rounded-full">
+                Descubre Nuestros Valores <i class="fas fa-arrow-right ml-3"></i>
+            </a>
+        </div>
+    </div>
+</section>
+<section class="container mx-auto py-24 px-6 md:px-12">
+    <h2 class="text-5xl-mobile md:text-5xl font-playfair font-bold text-primary-pink mb-16 text-center animate-fadeInUp">
+        Nuestros Productos Estrella: Un Toque de Magia
+        <br>
+    </h2>
+    <br>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        <div class="bg-white rounded-3xl shadow-lg p-7 flex flex-col items-center transform transition hover:scale-105 hover:shadow-2xl duration-300 animate-fadeInUp product-card-hover delay-100ms">
+            <img th:src="@{/imagenes/mate.jpg}"  alt="Labial Mate Sedoso" class="w-44 h-44 object-cover rounded-full mb-6 shadow-xl product-card-img">
+            <h3 class="text-xl font-semibold text-gray-800 mb-2 text-center">Labial Mate Sedoso</h3>
+            <p class="text-gray-600 text-center text-sm mb-4 line-clamp-2 leading-snug">Colores intensos y una duración inigualable para un look impecable. ¡No transfiere y es muy cómodo!</p>
+            <span class="text-primary-pink font-bold text-3xl mb-3">$12.00</span>
+
+        </div>
+        <div class="bg-white rounded-3xl shadow-lg p-7 flex flex-col items-center transform transition hover:scale-105 hover:shadow-2xl duration-300 animate-fadeInUp product-card-hover delay-200ms">
+            <img th:src="@{/imagenes/base.jpg}" alt="Base Líquida HD" class="w-44 h-44 object-cover rounded-full mb-6 shadow-xl product-card-img">
+            <h3 class="text-xl font-semibold text-gray-800 mb-2 text-center">Base Líquida HD</h3>
+            <p class="text-gray-600 text-center text-sm mb-4 line-clamp-2 leading-snug">Cobertura perfecta que se adapta a tu tono de piel para un acabado natural y duradero. ¡Para todo el día!</p>
+            <span class="text-primary-pink font-bold text-3xl mb-3">$25.00</span>
+
+        </div>
+        <div class="bg-white rounded-3xl shadow-lg p-7 flex flex-col items-center transform transition hover:scale-105 hover:shadow-2xl duration-300 animate-fadeInUp product-card-hover delay-300ms">
+            <img th:src="@{/imagenes/aurora.jpg}"  alt="Paleta de Sombras 'Aurora'" class="w-44 h-44 object-cover rounded-full mb-6 shadow-xl product-card-img">
+            <h3 class="text-xl font-semibold text-gray-800 mb-2 text-center">Paleta de Sombras 'Aurora'</h3>
+            <p class="text-gray-600 text-center text-sm mb-4 line-clamp-2 leading-snug">Tonos vibrantes y altamente pigmentados para crear looks infinitos, desde natural a audaz. ¡Versátil!</p>
+            <span class="text-primary-pink font-bold text-3xl mb-3">$32.00</span>
+        </div>
+        <div class="bg-white rounded-3xl shadow-lg p-7 flex flex-col items-center transform transition hover:scale-105 hover:shadow-2xl duration-300 animate-fadeInUp product-card-hover delay-400ms">
+            <img th:src="@{/imagenes/mascara.jpg}"  alt="Máscara Voluminizadora" class="w-44 h-44 object-cover rounded-full mb-6 shadow-xl product-card-img">
+            <h3 class="text-xl font-semibold text-gray-800 mb-2 text-center">Máscara Voluminizadora</h3>
+            <p class="text-gray-600 text-center text-sm mb-4 line-clamp-2 leading-snug">Pestañas con volumen extremo y longitud dramática, sin grumos ni manchas. ¡Mirada impactante!</p>
+            <span class="text-primary-pink font-bold text-3xl mb-3">$18.50</span>
+        </div>
+        <div class="bg-white rounded-3xl shadow-lg p-7 flex flex-col items-center transform transition hover:scale-105 hover:shadow-2xl duration-300 animate-fadeInUp product-card-hover delay-500ms">
+            <img th:src="@{/imagenes/serum.jpg}"  alt="Serum Facial con Vitamina C" class="w-44 h-44 object-cover rounded-full mb-6 shadow-xl product-card-img">
+            <h3 class="text-xl font-semibold text-gray-800 mb-2 text-center">Serum Facial Vitamina C</h3>
+            <p class="text-gray-600 text-center text-sm mb-4 line-clamp-2 leading-snug">Ilumina y rejuvenece tu piel, reduciendo manchas y finas líneas. ¡Piel más joven y vibrante!</p>
+            <span class="text-primary-pink font-bold text-3xl mb-3">$35.00</span>
+        </div>
+        <div class="bg-white rounded-3xl shadow-lg p-7 flex flex-col items-center transform transition hover:scale-105 hover:shadow-2xl duration-300 animate-fadeInUp product-card-hover delay-600ms">
+            <img th:src="@{/imagenes/solar.jpg}"  alt="Protector Solar Invisible" class="w-44 h-44 object-cover rounded-full mb-6 shadow-xl product-card-img">
+            <h3 class="text-xl font-semibold text-gray-800 mb-2 text-center">Protector Solar Invisible</h3>
+            <p class="text-gray-600 text-center text-sm mb-4 line-clamp-2 leading-snug">Protección SPF 50+ sin dejar residuos blancos, ideal para uso diario. ¡Cuidado esencial!</p>
+            <span class="text-primary-pink font-bold text-3xl mb-3">$28.00</span>
+        </div>
+    </div>
+    <div class="text-center mt-20 animate-fadeInUp delay-700ms">
+        <a href="/productos" class="inline-block text-primary-pink hover:text-primary-pink-dark font-bold text-xl border-b-4 border-primary-pink hover:border-primary-pink-dark pb-1 transition duration-300 px-6 py-3 rounded-full">
+            Ver Toda la Colección <i class="fas fa-arrow-right ml-3"></i>
+        </a>
+    </div>
+</section>
+<section class="bg-gradient-to-br from-purple-50 to-pink-100 py-24 px-6 md:px-12 animate-fadeIn">
+    <div class="container mx-auto">
+        <h2 class="text-5xl-mobile md:text-5xl font-playfair font-bold text-primary-pink mb-16 text-center animate-fadeInUp">
+            Encuentra tu Perfección por Categoría
+            <br>
+        </h2>
+        <br>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10"> <a href="/categoria/capilar" class="group bg-white rounded-3xl shadow-xl p-8 text-center transform transition hover:scale-105 hover:shadow-2xl duration-300 animate-zoomIn delay-100ms">
+            <div class="category-icon mx-auto"> <i class="fas fa-cut"></i> </div>
+            <h3 class="text-2xl font-semibold text-gray-800 group-hover:text-primary-pink mb-3">Cuidado Capilar</h3>
+            <p class="text-gray-600 text-lg-mobile leading-snug">Todo para un cabello sano, fuerte y brillante. Descubre shampoos, acondicionadores y tratamientos especializados.</p>
+        </a>
+            <a href="/categoria/rostro" class="group bg-white rounded-3xl shadow-xl p-8 text-center transform transition hover:scale-105 hover:shadow-2xl duration-300 animate-zoomIn delay-200ms">
+                <div class="category-icon mx-auto">
+                    <i class="fas fa-face-flushed"></i> </div>
+                <h3 class="text-2xl font-semibold text-gray-800 group-hover:text-primary-pink mb-3">Cuidado del Rostro</h3>
+                <p class="text-gray-600 text-lg-mobile leading-snug">Líneas completas para cada tipo de piel: limpieza profunda, hidratación intensa y tratamientos especializados.</p>
+            </a>
+            <a href="/categoria/maquillaje" class="group bg-white rounded-3xl shadow-xl p-8 text-center transform transition hover:scale-105 hover:shadow-2xl duration-300 animate-zoomIn delay-300ms">
+                <div class="category-icon mx-auto">
+                    <i class="fas fa-brush"></i> </div>
+                <h3 class="text-2xl font-semibold text-gray-800 group-hover:text-primary-pink mb-3">Maquillaje Profesional</h3>
+                <p class="text-gray-600 text-lg-mobile leading-snug">Desde lo natural para el día a día hasta lo más audaz para ocasiones especiales. ¡Expresa tu estilo!</p>
+            </a>
+            <a href="/categoria/fragancias" class="group bg-white rounded-3xl shadow-xl p-8 text-center transform transition hover:scale-105 hover:shadow-2xl duration-300 animate-zoomIn delay-400ms">
+                <div class="category-icon mx-auto">
+                    <i class="fas fa-spray-can-sparkles"></i> </div>
+                <h3 class="text-2xl font-semibold text-gray-800 group-hover:text-primary-pink mb-3">Fragancias Exclusivas</h3>
+                <p class="text-gray-600 text-lg-mobile leading-snug">Aromas cautivadores que dejan una impresión inolvidable. Encuentra tu esencia personal.</p>
+            </a>
+            <a href="/categoria/cuerpo" class="group bg-white rounded-3xl shadow-xl p-8 text-center transform transition hover:scale-105 hover:shadow-2xl duration-300 animate-zoomIn delay-500ms">
+                <div class="category-icon mx-auto">
+                    <i class="fas fa-hand-sparkles"></i> </div>
+                <h3 class="text-2xl font-semibold text-gray-800 group-hover:text-primary-pink mb-3">Cuidado Corporal</h3>
+                <p class="text-gray-600 text-lg-mobile leading-snug">Nutre e hidrata tu piel de pies a cabeza con nuestras lociones, aceites y exfoliantes.</p>
+            </a>
+            <a href="/categoria/accesorios" class="group bg-white rounded-3xl shadow-xl p-8 text-center transform transition hover:scale-105 hover:shadow-2xl duration-300 animate-zoomIn delay-600ms">
+                <div class="category-icon mx-auto">
+                    <i class="fas fa-gem"></i> </div>
+                <h3 class="text-2xl font-semibold text-gray-800 group-hover:text-primary-pink mb-3">Accesorios de Belleza</h3>
+                <p class="text-gray-600 text-lg-mobile leading-snug">Complementa tu rutina con brochas de calidad, esponjas y herramientas esenciales.</p>
+            </a>
+        </div>
+        <div class="text-center mt-20 animate-fadeInUp delay-700ms">
+            <a href="/tienda" class="inline-block text-primary-pink hover:text-primary-pink-dark font-bold text-xl border-b-4 border-primary-pink hover:border-primary-pink-dark pb-1 transition duration-300 px-8 py-3 rounded-full">
+                Ver Todas las Categorías <i class="fas fa-arrow-right ml-3"></i>
+            </a>
+        </div>
+    </div>
+</section>
+<section class="container mx-auto py-24 px-4 md:px-8">
+    <h2 class="text-5xl-mobile md:text-5xl font-playfair font-bold text-primary-pink mb-16 text-center animate-fadeInUp">
+        ¡Inspírate! Novedades y Colecciones Exclusivas
+        <br>
+    </h2>
+    <br>
+    <br>
+    <div id="gallery-carousel" class="relative w-full max-w-6xl mx-auto rounded-3xl shadow-2xl overflow-hidden group" data-carousel="slide">
+        <div class="relative h-96 md:h-[600px] overflow-hidden rounded-3xl">
+            <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                <img th:src="@{/imagenes/1.jpg}"  class="absolute block w-full h-full object-cover transform scale-100 group-hover:scale-105 transition-transform duration-1000 ease-in-out" alt="Novedad 1: Colección Labiales Otoño">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-8 md:p-16">
+                    <h3 class="text-white text-3xl md:text-5xl font-playfair font-bold mb-4 drop-shadow-lg animate-slideInLeft">
+                        Colección Sombras Nute
+                    </h3>
+                    <p class="text-white text-lg md:text-xl max-w-3xl animate-slideInLeft delay-200ms leading-relaxed">
+                        Descubre la suavidad del terciopelo en tus ojos con nuestra nueva gama de sombras de larga duración.
+                    </p>
+                </div>
+            </div>
+            <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                <img th:src="@{/imagenes/4.jpg}" class="absolute block w-full h-full object-cover transform scale-100 group-hover:scale-105 transition-transform duration-1000 ease-in-out" alt="Novedad 2: Cremas Hidratantes Orgánicas">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-8 md:p-16">
+                    <h3 class="text-black text-3xl md:text-5xl font-playfair font-bold mb-4 drop-shadow-lg animate-slideInLeft">
+                        Ritual de Cuidado Facial Orgánico
+                    </h3>
+                    <p class="text-black text-lg md:text-xl max-w-3xl animate-slideInLeft delay-200ms leading-relaxed">
+                        Nutre tu piel con la pureza de la naturaleza. Ingredientes botánicos para una piel radiante.
+                    </p>
+                </div>
+            </div>
+            <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                <img th:src="@{/imagenes/5.jpg}"  class="absolute block w-full h-full object-cover transform scale-100 group-hover:scale-105 transition-transform duration-1000 ease-in-out" alt="Novedad 3: Perfumes Exclusivos">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-8 md:p-16">
+                    <h3 class="text-white text-3xl md:text-5xl font-playfair font-bold mb-4 drop-shadow-lg animate-slideInLeft">
+                        "Éclat de Lune": Nuestra Nueva Fragancia
+                    </h3>
+                    <p class="text-white text-lg md:text-xl max-w-3xl animate-slideInLeft delay-200ms leading-relaxed">
+                        Un aroma hipnótico que captura la magia de la noche. Elegancia y misterio en cada gota.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <button type="button" class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-6 cursor-pointer group focus:outline-none" data-carousel-prev>
+            <span class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-white/70 group-hover:bg-white/90 shadow-lg">
+                <svg class="w-8 h-8 text-primary-pink" fill="none" stroke="currentColor" viewBox="0 0 20 20"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
             </span>
         </button>
-        <button type="button" class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/80 group-hover:bg-white/100">
-                <svg class="w-6 h-6 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        <button type="button" class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-6 cursor-pointer group focus:outline-none" data-carousel-next>
+            <span class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-white/70 group-hover:bg-white/90 shadow-lg">
+                <svg class="w-8 h-8 text-primary-pink" fill="none" stroke="currentColor" viewBox="0 0 20 20"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
             </span>
         </button>
-    </div>
-</section>
-
-<!-- Testimonios -->
-<section class="bg-pink-100 py-12 animate-fadeIn">
-    <h2 class="text-2xl font-bold text-pink-700 mb-8 text-center">Testimonios</h2>
-    <div class="flex flex-col md:flex-row justify-center items-center gap-8">
-        <div class="bg-white rounded-lg shadow-lg p-6 max-w-xs text-center transition hover:scale-105 duration-300">
-            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Cliente" class="w-16 h-16 rounded-full mx-auto mb-4">
-            <p class="text-gray-700 italic mb-2">"¡Me encantan los productos! Mi piel luce radiante y natural."</p>
-            <span class="text-pink-600 font-semibold">Ana G.</span>
-        </div>
-        <div class="bg-white rounded-lg shadow-lg p-6 max-w-xs text-center transition hover:scale-105 duration-300">
-            <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Cliente" class="w-16 h-16 rounded-full mx-auto mb-4">
-            <p class="text-gray-700 italic mb-2">"La atención es excelente y los envíos muy rápidos."</p>
-            <span class="text-pink-600 font-semibold">María P.</span>
-        </div>
-        <div class="bg-white rounded-lg shadow-lg p-6 max-w-xs text-center transition hover:scale-105 duration-300">
-            <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Cliente" class="w-16 h-16 rounded-full mx-auto mb-4">
-            <p class="text-gray-700 italic mb-2">"Recomiendo la paleta de sombras, ¡colores hermosos!"</p>
-            <span class="text-pink-600 font-semibold">Lucía R.</span>
+        <div class="absolute z-30 flex -translate-x-1/2 bottom-8 left-1/2 space-x-4 rtl:space-x-reverse">
+            <button type="button" class="w-4 h-4 rounded-full bg-white ring-2 ring-primary-pink" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
+            <button type="button" class="w-4 h-4 rounded-full bg-white ring-2 ring-primary-pink" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
+            <button type="button" class="w-4 h-4 rounded-full bg-white ring-2 ring-primary-pink" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
         </div>
     </div>
 </section>
-<!-- Sección de Suscripción -->
-<section class="bg-pink-200 py-12 animate-fadeInUp">
+<section class="bg-gradient-to-r from-pink-50 to-red-50 py-24 px-6 md:px-12 animate-fadeIn">
+    <div class="container mx-auto">
+        <h2 class="text-5xl-mobile md:text-5xl font-playfair font-bold text-primary-pink mb-16 text-center">
+            Testimonios: La Voz de la Belleza Real
+            <br>
+        </h2>
+        <br>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 max-w-6xl mx-auto">
+            <div class="bg-white rounded-3xl shadow-xl p-8 text-center transition hover:scale-105 duration-300 animate-fadeInUp delay-100ms">
+                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Cliente Ana G." class="w-28 h-28 rounded-full mx-auto mb-6 border-4 border-primary-pink-light shadow-md">
+                <p class="text-gray-700 italic text-lg mb-4 leading-relaxed">
+                    "¡Mi piel nunca se ha sentido tan nutrida y radiante! Essences AL superó mis expectativas con productos de calidad excepcional y un servicio impecable."
+                </p>
+                <div class="text-yellow-500 mb-3 text-xl">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <span class="text-primary-pink font-semibold text-lg block">- Ana G., Cliente Feliz desde Quito</span>
+            </div>
+            <div class="bg-white rounded-3xl shadow-xl p-8 text-center transition hover:scale-105 duration-300 animate-fadeInUp delay-200ms">
+                <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Cliente María P." class="w-28 h-28 rounded-full mx-auto mb-6 border-4 border-primary-pink-light shadow-md">
+                <p class="text-gray-700 italic text-lg mb-4 leading-relaxed">
+                    "La atención es personalizada y los envíos llegan rapidísimo, incluso aquí en Guayaquil. ¡Cada compra es una experiencia placentera!"
+                </p>
+                <div class="text-yellow-500 mb-3 text-xl">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                </div>
+                <span class="text-primary-pink font-semibold text-lg block">- María P., Entusiasta de la Belleza, Guayaquil</span>
+            </div>
+            <div class="bg-white rounded-3xl shadow-xl p-8 text-center transition hover:scale-105 duration-300 animate-fadeInUp delay-300ms">
+                <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Cliente Lucía R." class="w-28 h-28 rounded-full mx-auto mb-6 border-4 border-primary-pink-light shadow-md">
+                <p class="text-gray-700 italic text-lg mb-4 leading-relaxed">
+                    "Recomiendo totalmente la paleta de sombras 'Aurora'. Los colores son aún más hermosos en persona y duran todo el día. ¡Impresionante!"
+                </p>
+                <div class="text-yellow-500 mb-3 text-xl">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <span class="text-primary-pink font-semibold text-lg block">- Lucía R., Amante del Maquillaje, Cuenca</span>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="bg-gradient-to-tl from-purple-50 to-secondary-pink py-24 px-6 md:px-12 animate-fadeInUp">
     <div class="container mx-auto text-center">
-        <h2 class="text-2xl font-bold text-pink-700 mb-4">¡Suscríbete y recibe ofertas exclusivas!</h2>
-        <form class="flex flex-col md:flex-row justify-center items-center gap-4">
-            <input type="email" placeholder="Tu correo electrónico" required class="px-4 py-2 rounded-full border-2 border-pink-400 focus:outline-none focus:ring-2 focus:ring-pink-500 transition w-72">
-            <button type="submit" class="bg-pink-600 text-white px-6 py-2 rounded-full font-semibold shadow hover:bg-pink-700 transition transform hover:scale-105 duration-300">Suscribirme</button>
+        <h2 class="text-5xl-mobile md:text-5xl font-playfair font-bold text-primary-pink mb-16 animate-fadeInUp">
+            ¡Descubre Nuestras Ofertas Irresistibles!
+            <br>
+        </h2>
+        <br>
+        <p class="text-lg md:text-xl text-gray-700 max-w-4xl mx-auto mb-12 animate-fadeIn delay-200ms leading-relaxed">
+            Aprovecha estas promociones especiales por tiempo limitado. La belleza de alta calidad a precios que te encantarán.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            <div class="bg-white rounded-3xl shadow-xl p-8 animate-fadeInUp delay-300ms transform transition hover:scale-105 duration-300">
+                <img th:src="@{/imagenes/labiales.jpg}"  alt="Oferta 1" class="w-full h-56 object-cover rounded-xl mb-6 shadow-md">
+                <h3 class="text-2xl font-semibold text-primary-pink mb-3">2x1 en Labiales Deluxe</h3>
+                <br>
+                <p class="text-gray-600 mb-5 text-lg-mobile leading-snug">Compra uno de nuestros labiales de lujo y llévate el segundo completamente gratis. ¡Perfecto para combinar!</p>
+                <div class="flex items-center justify-center mb-5">
+                    <span class="text-2xl font-bold text-red-500 line-through mr-4">$24.00</span>
+                    <span class="text-4xl font-extrabold text-green-600">$12.00</span>
+                </div>
+                <a href="/ofertas/labiales-2x1" class="block bg-primary-pink text-white px-10 py-4 rounded-full font-bold text-lg shadow-xl hover:bg-primary-pink-dark transition transform hover:scale-105 duration-300">
+                    ¡Aprovechar Ahora!
+                </a>
+            </div>
+            <div class="bg-white rounded-3xl shadow-xl p-8 animate-fadeInUp delay-400ms transform transition hover:scale-105 duration-300">
+                <img th:src="@{/imagenes/descuento.jpg}"  alt="Oferta 2" class="w-full h-56 object-cover rounded-xl mb-6 shadow-md">
+                <h3 class="text-2xl font-semibold text-primary-pink mb-3">30% de Descuento en Skincare Premium</h3>
+                <p class="text-gray-600 mb-5 text-lg-mobile leading-snug">Renueva tu rutina de cuidado facial con nuestras cremas y serums premium con un descuento especial.</p>
+                <div class="flex items-center justify-center mb-5">
+                    <span class="text-2xl font-bold text-red-500 line-through mr-4">$45.00</span>
+                    <span class="text-4xl font-extrabold text-green-600">$31.50</span>
+                </div>
+                <a href="/ofertas/skincare-premium" class="block bg-primary-pink text-white px-10 py-4 rounded-full font-bold text-lg shadow-xl hover:bg-primary-pink-dark transition transform hover:scale-105 duration-300">
+                    ¡Comprar Ahora!
+                </a>
+            </div>
+            <div class="bg-white rounded-3xl shadow-xl p-8 animate-fadeInUp delay-500ms transform transition hover:scale-105 duration-300">
+                <img th:src="@{/imagenes/desc.jpg}"  alt="Oferta 3" class="w-full h-56 object-cover rounded-xl mb-6 shadow-md">
+                <br>
+                <h3 class="text-2xl font-semibold text-primary-pink mb-3">Envío Gratuito en Compras Mayores a $50</h3>
+                <p class="text-gray-600 mb-5 text-lg-mobile leading-snug">Llena tu carrito con tus favoritos y olvídate del costo de envío. Válido en todo Ecuador.</p>
+                <div class="flex items-center justify-center mb-5">
+                    <span class="text-4xl font-extrabold text-primary-pink">¡Envío Gratis!</span>
+                </div>
+                <a href="/tienda" class="block bg-primary-pink text-white px-10 py-4 rounded-full font-bold text-lg shadow-xl hover:bg-primary-pink-dark transition transform hover:scale-105 duration-300">
+                    Explorar Productos <i class="fas fa-box-open ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="container mx-auto py-24 px-6 md:px-12">
+    <h2 class="text-5xl-mobile md:text-5xl font-playfair font-bold text-primary-pink mb-16 text-center animate-fadeInUp">
+        Confía en la Calidad: Nuestras Marcas Aliadas
+    </h2>
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-12 items-center justify-center max-w-6xl mx-auto">
+        <div class="col-span-1 flex justify-center py-4 animate-zoomIn delay-100ms">
+            <img class="h-20 object-contain grayscale hover:grayscale-0 transition-all duration-300 transform hover:scale-110"th:src="@{/imagenes/loreal.jpg}"  alt="L'Oréal Logo">
+        </div>
+        <div class="col-span-1 flex justify-center py-4 animate-zoomIn delay-200ms">
+            <img class="h-20 object-contain grayscale hover:grayscale-0 transition-all duration-300 transform hover:scale-110" th:src="@{/imagenes/maybelline.png}"  alt="Maybelline Logo">
+        </div>
+        <div class="col-span-1 flex justify-center py-4 animate-zoomIn delay-300ms">
+            <img class="h-20 object-contain grayscale hover:grayscale-0 transition-all duration-300 transform hover:scale-110" th:src="@{/imagenes/revlon.png}"  alt="Revlon Logo">
+        </div>
+        <div class="col-span-1 flex justify-center py-4 animate-zoomIn delay-400ms">
+            <img class="h-20 object-contain grayscale hover:grayscale-0 transition-all duration-300 transform hover:scale-110" th:src="@{/imagenes/nyx.png}"  alt="NYX Logo">
+        </div>
+        <div class="col-span-1 flex justify-center py-4 animate-zoomIn delay-500ms">
+            <img class="h-20 object-contain grayscale hover:grayscale-0 transition-all duration-300 transform hover:scale-110" th:src="@{/imagenes/fenty.png}"  alt="Fenty Beauty Logo">
+        </div>
+        <div class="col-span-1 flex justify-center py-4 animate-zoomIn delay-500ms">
+            <img class="h-20 object-contain grayscale hover:grayscale-0 transition-all duration-300 transform hover:scale-110" th:src="@{/imagenes/moira.png}"  alt="Moira Logo">
+        </div>
+    </div>
+    <div class="text-center mt-20 animate-fadeInUp delay-600ms">
+        <a href="/marcas" class="inline-block text-primary-pink hover:text-primary-pink-dark font-bold text-xl border-b-4 border-primary-pink hover:border-primary-pink-dark pb-1 transition duration-300 px-8 py-3 rounded-full">
+            Descubre Todas las Marcas <i class="fas fa-angle-right ml-3"></i>
+        </a>
+    </div>
+</section>
+<section class="bg-gradient-to-tl from-pink-100 to-primary-pink py-15 px-24 md:px-8 text-primary-pink animate-fadeInUp">
+    <div class="container mx-auto text-center max-w-4xl">
+        <h2 class="text-5xl-mobile md:text-5xl font-playfair font-bold mb-6 drop-shadow-md">
+            Únete a Nuestra Comunidad de Belleza
+        </h2>
+        <br>
+        <p class="text-lg md:text-xl mb-12 leading-relaxed opacity-90">
+            Suscríbete a nuestro boletín exclusivo y sé la primera en recibir ofertas increíbles,
+            novedades de productos, trucos de belleza de expertos y sorpresas solo para ti.
+        </p>
+        <br>
+        <form class="flex flex-col md:flex-row justify-center items-center gap-6">
+            <input type="email" placeholder="Introduce tu correo electrónico aquí..." required class="px-8 py-4 rounded-full border-4 border-white focus:outline-none focus:ring-4 focus:ring-purple-200 transition-all duration-300 w-full md:w-96 text-lg text-gray-800 placeholder-gray-500 shadow-xl">
+            <button type="submit" class="bg-white text-primary-pink px-10 py-4 rounded-full font-bold text-lg shadow-xl hover:bg-gray-100 transition transform hover:scale-105 duration-300 w-full md:w-auto">
+                <i class="fas fa-envelope-open-text mr-3"></i> Suscribirme
+            </button>
         </form>
+        <p class="text-sm text-black mt-8 opacity-80">
+            Tu privacidad es importante para nosotros. No compartiremos tu correo electrónico y puedes darte de baja en cualquier momento.
+        </p>
     </div>
 </section>
+<section class="container mx-auto py-24 px-6 md:px-12">
+    <h2 class="text-5xl-mobile md:text-5xl font-playfair font-bold text-primary-pink mb-16 text-center">
+        Preguntas Frecuentes
+    </h2>
+    <br>
+    <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-primary-pink-light text-primary-pink" data-inactive-classes="text-gray-800" class="max-w-4xl mx-auto border border-gray-200 rounded-3xl overflow-hidden shadow-2xl">
+        <h3>
+            <button type="button" class="flex justify-between items-center w-full py-6 px-8 font-semibold text-left border-b border-gray-200 hover:bg-primary-pink-light focus:ring-4 focus:ring-primary-pink-light transition duration-300 text-xl md:text-2xl" data-accordion-target="#faq-accordion-1" aria-expanded="false" aria-controls="faq-accordion-1">
+                <span>¿Cuál es el tiempo de envío estimado para mi pedido?</span>
+                <svg data-accordion-icon class="w-7 h-7 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08z" clip-rule="evenodd"/></svg>
+            </button>
+        </h3>
+        <div id="faq-accordion-1" class="hidden" aria-labelledby="faq-accordion-1-heading">
+            <div class="py-6 px-8 border-b border-gray-200 text-gray-700 leading-relaxed text-lg md:text-xl">
+                Para entregas dentro de Ecuador, el envío estándar tarda entre 2 a 5 días hábiles. Realizamos envíos a todo el país y te proporcionaremos un número de seguimiento detallado para que puedas monitorear tu paquete en cada etapa.
+            </div>
+        </div>
 
-<!-- Sección FAQ -->
-<section class="container mx-auto py-12">
-    <h2 class="text-2xl font-bold text-pink-700 mb-8 text-center">Preguntas Frecuentes</h2>
-    <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-pink-100 text-pink-700" class="max-w-2xl mx-auto">
         <h3>
-            <button type="button" class="flex justify-between items-center w-full py-4 font-medium text-left text-gray-700 border-b border-gray-200" data-accordion-target="#faq1" aria-expanded="true" aria-controls="faq1">
-                ¿Cuánto tarda el envío?
-                <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08z" clip-rule="evenodd"/></svg>
+            <button type="button" class="flex justify-between items-center w-full py-6 px-8 font-semibold text-left border-b border-gray-200 hover:bg-primary-pink-light focus:ring-4 focus:ring-primary-pink-light transition duration-300 text-xl md:text-2xl" data-accordion-target="#faq-accordion-2" aria-expanded="false" aria-controls="faq-accordion-2">
+                <span>¿Qué opciones de pago están disponibles? ¿Aceptan pago contra entrega?</span>
+                <svg data-accordion-icon class="w-7 h-7 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08z" clip-rule="evenodd"/></svg>
             </button>
         </h3>
-        <div id="faq1" class="hidden">
-            <div class="py-4 text-gray-600">El envío tarda entre 2 y 5 días hábiles según tu ubicación.</div>
+        <div id="faq-accordion-2" class="hidden" aria-labelledby="faq-accordion-2-heading">
+            <div class="py-6 px-8 border-b border-gray-200 text-gray-700 leading-relaxed text-lg md:text-xl">
+                Aceptamos una variedad de métodos de pago, incluyendo tarjetas de crédito y débito (Visa, MasterCard, American Express), transferencias bancarias y, sí, pago contra entrega en las principales ciudades de Ecuador. Verás las opciones disponibles al finalizar tu compra.
+            </div>
         </div>
+
         <h3>
-            <button type="button" class="flex justify-between items-center w-full py-4 font-medium text-left text-gray-700 border-b border-gray-200" data-accordion-target="#faq2" aria-expanded="false" aria-controls="faq2">
-                ¿Puedo pagar contra entrega?
-                <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08z" clip-rule="evenodd"/></svg>
+            <button type="button" class="flex justify-between items-center w-full py-6 px-8 font-semibold text-left border-b border-gray-200 hover:bg-primary-pink-light focus:ring-4 focus:ring-primary-pink-light transition duration-300 text-xl md:text-2xl" data-accordion-target="#faq-accordion-3" aria-expanded="false" aria-controls="faq-accordion-3">
+                <span>¿Los productos de Essences AL son originales y adecuados para piel sensible?</span>
+                <svg data-accordion-icon class="w-7 h-7 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08z" clip-rule="evenodd"/></svg>
             </button>
         </h3>
-        <div id="faq2" class="hidden">
-            <div class="py-4 text-gray-600">Sí, aceptamos pago contra entrega en ciertas ciudades.</div>
+        <div id="faq-accordion-3" class="hidden" aria-labelledby="faq-accordion-3-heading">
+            <div class="py-6 px-8 border-b border-gray-200 text-gray-700 leading-relaxed text-lg md:text-xl">
+                Absolutamente. Todos nuestros productos son 100% originales y certificados por los fabricantes. Además, priorizamos ofrecer opciones con ingredientes naturales y amigables para todo tipo de piel, incluyendo las más sensibles. Revisa las descripciones de cada producto o contáctanos para una asesoría personalizada.
+            </div>
         </div>
+
         <h3>
-            <button type="button" class="flex justify-between items-center w-full py-4 font-medium text-left text-gray-700 border-b border-gray-200" data-accordion-target="#faq3" aria-expanded="false" aria-controls="faq3">
-                ¿Los productos son originales?
-                <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08z" clip-rule="evenodd"/></svg>
+            <button type="button" class="flex justify-between items-center w-full py-6 px-8 font-semibold text-left hover:bg-primary-pink-light focus:ring-4 focus:ring-primary-pink-light transition duration-300 text-xl md:text-2xl" data-accordion-target="#faq-accordion-4" aria-expanded="false" aria-controls="faq-accordion-4">
+                <span>¿Cuentan con un programa de puntos o beneficios para clientes frecuentes?</span>
+                <svg data-accordion-icon class="w-7 h-7 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08z" clip-rule="evenodd"/></svg>
             </button>
         </h3>
-        <div id="faq3" class="hidden">
-            <div class="py-4 text-gray-600">Todos nuestros productos son 100% originales y certificados.</div>
+        <div id="faq-accordion-4" class="hidden" aria-labelledby="faq-accordion-4-heading">
+            <div class="py-6 px-8 text-gray-700 leading-relaxed text-lg md:text-xl">
+                ¡Sí! En Essences AL, recompensamos tu lealtad. Contamos con un emocionante programa de puntos donde acumulas créditos con cada compra. Estos puntos pueden ser canjeados por descuentos en futuros pedidos. ¡Regístrate y empieza a disfrutar de los beneficios exclusivos para nuestra comunidad!
+            </div>
         </div>
     </div>
 </section>
+<section class="bg-primary-pink py-24 px-6 md:px-12 text-white text-center animate-fadeIn">
+    <div class="container mx-auto max-w-5xl">
+        <h2 class="text-5xl-mobile md:text-6xl font-playfair font-bold mb-10 drop-shadow-lg">
+            Tu Belleza, Tu Confianza: ¡Empieza Hoy!
+        </h2>
+        <p class="text-lg md:text-xl mb-14 max-w-3xl mx-auto opacity-90 leading-relaxed">
+            No esperes más para transformar tu rutina de belleza con productos que no solo te hacen lucir bien,
+            sino que te hacen sentir fabulosa por dentro y por fuera.
+        </p>
+    </div>
+    <br>
+</section>
 
-<style>
-    .animate-fadeIn { animation: fadeIn 1s ease-in; }
-    .animate-fadeInUp { animation: fadeInUp 1s ease-in; }
-    .animate-fadeInDown { animation: fadeInDown 1s ease-in; }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px);} to { opacity: 1; transform: translateY(0);} }
-    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-40px);} to { opacity: 1; transform: translateY(0);} }
-</style>
-</body>
 <div th:replace="~{fragments/footer :: footer}"></div>
+
+
+</body>
 </html>

@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Lista Facturas</title>
+</head>
+<body class="bg-gray-100 p-8">
+<div class="container mx-auto bg-white p-8 rounded-lg shadow-xl">
+    <h2 class="text-3xl font-bold text-red-600 mb-6 text-center">Listado de Facturas</h2>
+
+    <form th:action="@{/facturas}" method="get" class="mb-6 flex space-x-2">
+        <input type="text" name="buscarFactura" class="flex-grow shadow-sm appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500" placeholder="Buscar"
+               th:value="${buscarFactura}">
+        <button class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline transition duration-200 ease-in-out" type="submit">Buscar</button>
+    </form>
+
+    <div class="overflow-x-auto rounded-lg shadow-md">
+        <div th:if="${#lists.isEmpty(facturas)}" class="text-center text-gray-500 py-8">
+            No hay facturas registradas.
+        </div>
+        <div th:each="factura : ${facturas}" class="max-w-lg mx-auto bg-white border border-gray-300 rounded-lg shadow-md mb-8 p-8">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-2xl font-bold text-red-600">Factura</h3>
+                <span class="text-gray-500 font-mono">N° <span th:text="${factura.numero}"></span></span>
+            </div>
+            <div class="mb-4">
+                <div class="flex justify-between">
+                    <span class="font-semibold">Cliente:</span>
+                    <span th:text="${factura.cliente != null ? factura.cliente.nombre + ' ' + factura.cliente.apellido : 'N/A'}"></span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="font-semibold">Producto:</span>
+                    <span th:text="${factura.producto != null ? factura.producto.nombre : 'N/A'}"></span>
+                </div>
+            </div>
+            <table class="w-full text-sm mb-4 border border-gray-300">
+                <thead>
+                <tr class="bg-gray-100">
+                    <th class="border px-2 py-1">Cantidad</th>
+                    <th class="border px-2 py-1">Precio Unitario</th>
+                    <th class="border px-2 py-1">Subtotal</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="border px-2 py-1 text-center" th:text="${factura.cantidad}"></td>
+                    <td class="border px-2 py-1 text-center" th:text="${#numbers.formatDecimal(factura.precio, 1, 2)}"></td>
+                    <td class="border px-2 py-1 text-center" th:text="${#numbers.formatDecimal(factura.subtotal, 1, 2)}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="flex justify-end items-center">
+                <span class="font-bold text-lg mr-2">Total:</span>
+                <span class="text-lg font-mono" th:text="${#numbers.formatDecimal(factura.total, 1, 2)}"></span>
+            </div>
+            <div class="flex justify-end mt-4 space-x-2">
+                <a th:href="@{/editar-factura/} + ${factura.numero}" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-1 px-3 rounded-md transition duration-200 ease-in-out">Editar</a>
+                <a th:href="@{/eliminar-factura/} + ${factura.numero}" class="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded-md transition duration-200 ease-in-out"
+                   onclick="return confirm('¿Está seguro de que desea eliminar esta factura?');">Eliminar</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex justify-between mt-6">
+        <a th:href="@{/formularioFactura}" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md transition duration-200 ease-in-out">Crear Nueva Factura</a>
+    </div>
+</div>
+</body>
+</html>
