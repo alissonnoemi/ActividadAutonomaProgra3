@@ -1,50 +1,78 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <title>Lista Proveedores</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <title>Lista Proveedores</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .animate-fadeIn { animation: fadeIn 1s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
 </head>
-<body class="bg-gray-100 p-8">
-<div class="container mx-auto bg-white p-8 rounded-lg shadow-xl">
-    <h2 class="text-3xl font-bold text-yellow-600 mb-6 text-center">Listado de Proveedores</h2>
+<body class="min-h-screen bg-gradient-to-br from-yellow-100 via-orange-100 to-pink-100 flex items-center justify-center">
 
-    <form th:action="@{/proveedores}" method="get" class="mb-6 flex space-x-2">
-        <input type="text" name="buscarProveedor" class="flex-grow shadow-sm appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500" placeholder="Buscar por nombre..."
-               th:value="${buscarProveedor}">
-        <button class="bg-yellow-600 hover:bg-yellow-700 text-gray-900 font-bold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline transition duration-200 ease-in-out" type="submit">Buscar</button>
-    </form>
+<div class="w-full max-w-5xl animate-fadeIn">
 
-    <div class="overflow-x-auto rounded-lg shadow-md">
-        <table class="min-w-full leading-normal">
-            <thead>
-            <tr class="bg-yellow-600 text-gray-900 text-left text-sm font-semibold uppercase tracking-wider">
-                <th class="px-5 py-3 border-b-2 border-yellow-700">Código</th>
-                <th class="px-5 py-3 border-b-2 border-yellow-700">Nombre</th>
-                <th class="px-5 py-3 border-b-2 border-yellow-700">Dirección</th>
-                <th class="px-5 py-3 border-b-2 border-yellow-700">Teléfono</th>
-                <th class="px-5 py-3 border-b-2 border-yellow-700 text-center">Acciones</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="proveedor : ${proveedores}" class="hover:bg-yellow-50">
-                <td class="px-5 py-3 border-b border-gray-200 text-sm text-gray-800" th:text="${proveedor.codigo}"></td>
-                <td class="px-5 py-3 border-b border-gray-200 text-sm text-gray-800" th:text="${proveedor.nombre}"></td>
-                <td class="px-5 py-3 border-b border-gray-200 text-sm text-gray-800" th:text="${proveedor.direccion}"></td>
-                <td class="px-5 py-3 border-b border-gray-200 text-sm text-center">
-                    <a th:href="@{/editar-proveedor/} + ${proveedor.codigo}" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-1 px-3 rounded-md mr-2 transition duration-200 ease-in-out">Editar</a>
-                    <a th:href="@{/eliminar-proveedor/} + ${proveedor.codigo}" class="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded-md transition duration-200 ease-in-out"
-                       onclick="return confirm('¿Está seguro de que desea eliminar este proveedor?');">Eliminar</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+    <div class="bg-gradient-to-r from-yellow-400 via-orange-400 to-pink-400 rounded-t-3xl shadow-lg p-6 text-center">
+        <h2 class="text-3xl font-extrabold text-white mb-2 tracking-wide drop-shadow">Listado de Proveedores</h2>
+        <p class="text-white/90">Consulta, edita o elimina proveedores registrados</p>
     </div>
 
-    <div class="flex justify-between mt-6">
-        <a th:href="@{/formularioProveedor}" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md transition duration-200 ease-in-out">Registrar Nuevo Proveedor</a>
+    <div class="bg-white rounded-b-3xl shadow-2xl px-8 py-8">
+
+        <form th:action="@{/proveedores}" method="get" class="mb-6 flex items-center gap-2">
+            <div class="relative flex-grow">
+                <span class="absolute left-3 top-2.5 text-yellow-400"><i class="fa fa-search"></i></span>
+                <input type="text" name="buscarProveedor"
+                       class="pl-10 pr-3 py-2 w-full rounded-lg border border-yellow-200 focus:ring-2 focus:ring-yellow-400 text-gray-700 shadow-sm transition"
+                       placeholder="Buscar por nombre..." th:value="${buscarProveedor}">
+            </div>
+            <button class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-lg shadow transition transform hover:scale-105 duration-200" type="submit">
+                <i class="fa fa-search mr-1"></i>Buscar
+            </button>
+        </form>
+
+        <div class="overflow-x-auto rounded-lg shadow-md">
+            <table class="min-w-full leading-normal">
+                <thead>
+                <tr class="bg-yellow-600 text-white text-left text-sm font-semibold uppercase tracking-wider">
+                    <th class="px-5 py-3 border-b-2 border-yellow-700"><i class="fa fa-barcode mr-1"></i>Código</th>
+                    <th class="px-5 py-3 border-b-2 border-yellow-700"><i class="fa fa-user mr-1"></i>Nombre</th>
+                    <th class="px-5 py-3 border-b-2 border-yellow-700"><i class="fa fa-map-marker-alt mr-1"></i>Dirección</th>
+                    <th class="px-5 py-3 border-b-2 border-yellow-700"><i class="fa fa-phone mr-1"></i>Teléfono</th>
+                    <th class="px-5 py-3 border-b-2 border-yellow-700 text-center"><i class="fa fa-cogs mr-1"></i>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="proveedor : ${proveedores}" class="hover:bg-yellow-50 transition">
+                    <td class="px-5 py-3 border-b border-gray-200 text-sm text-gray-800" th:text="${proveedor.codigo}"></td>
+                    <td class="px-5 py-3 border-b border-gray-200 text-sm text-gray-800" th:text="${proveedor.nombre}"></td>
+                    <td class="px-5 py-3 border-b border-gray-200 text-sm text-gray-800" th:text="${proveedor.direccion}"></td>
+                    <td class="px-5 py-3 border-b border-gray-200 text-sm text-center">
+                        <a th:href="@{/editar-proveedor/} + ${proveedor.codigo}"
+                           class="inline-flex items-center bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold py-1 px-3 rounded-lg mr-2 shadow transition transform hover:scale-105 duration-200">
+                            <i class="fa fa-edit mr-1"></i>Editar
+                        </a>
+                        <a th:href="@{/eliminar-proveedor/} + ${proveedor.codigo}"
+                           class="inline-flex items-center bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded-lg shadow transition transform hover:scale-105 duration-200"
+                           onclick="return confirm('¿Está seguro de que desea eliminar este proveedor?');">
+                            <i class="fa fa-trash mr-1"></i>Eliminar
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="flex justify-end mt-6">
+            <a th:href="@{/formularioProveedor}"
+               class="inline-flex items-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg shadow transition transform hover:scale-105 duration-200">
+                <i class="fa fa-plus mr-2"></i>Registrar Nuevo Proveedor
+            </a>
+        </div>
     </div>
 </div>
 </body>

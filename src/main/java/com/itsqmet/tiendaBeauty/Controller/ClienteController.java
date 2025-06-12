@@ -31,14 +31,14 @@ public class ClienteController {
         model.addAttribute("cliente", new Cliente());
         return "pages/formularioCliente";
     }
-
     @PostMapping("/guardar-cliente")
     public String guardarCliente(@Valid @ModelAttribute Cliente cliente,
                                  BindingResult bindingResult, Model model){
         if(bindingResult.hasErrors()) {
             model.addAttribute("errors", bindingResult.getAllErrors());
-            return  "pages/formularioCliente";
+            return "pages/formularioCliente";
         } else {
+            clienteServicio.guardarCliente(cliente); // Guarda el cliente
             return "redirect:/clientes";
         }
     }

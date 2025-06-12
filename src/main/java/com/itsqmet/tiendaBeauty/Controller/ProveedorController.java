@@ -34,15 +34,15 @@ public class ProveedorController {
     }
 
     @PostMapping("/guardar-proveedor")
-    public String guardarProveedor(@Valid @ModelAttribute  Proveedor proveedor,
-                                   BindingResult bindingResult, Model model){
-        if(bindingResult.hasErrors()) {
+    public String guardarProveedor(@Valid @ModelAttribute Proveedor proveedor,
+                                   BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
             model.addAttribute("errors", bindingResult.getAllErrors());
-            return  "pages/formularioProveedor";
+            return "pages/formularioProveedor";
         } else {
+            proveedorServicio.guardarProveedor(proveedor); // Guarda el proveedor
             return "redirect:/proveedores";
         }
-
     }
 
     @GetMapping("/editar-proveedor/{codigo}")

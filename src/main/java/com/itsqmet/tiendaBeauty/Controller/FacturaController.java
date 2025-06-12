@@ -46,19 +46,17 @@ public class FacturaController {
         model.addAttribute("productos", productos);
         return "pages/formularioFactura";
     }
-
     @PostMapping("/guardar-factura")
     public String guardarFactura(@Valid @ModelAttribute Factura factura,
                                  BindingResult bindingResult, Model model){
         if (bindingResult.hasErrors()) {
             model.addAttribute("errors", bindingResult.getAllErrors());
-            return  "pages/formularioFactura";
-        } else{
+            return "pages/formularioFactura";
+        } else {
+            facturaServicio.guardarFactura(factura); // Guarda la factura
             return "redirect:/facturas";
         }
-
     }
-
     @GetMapping("/editar-factura/{numero}")
     public String actualizarFactura(@PathVariable Long numero, Model model){
         Optional<Factura> factura = facturaServicio.buscarFacturaPorNumero(numero);

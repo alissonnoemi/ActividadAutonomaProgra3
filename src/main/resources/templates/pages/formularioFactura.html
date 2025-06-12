@@ -1,73 +1,119 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <title>Formulario Factura</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <title>Formulario Factura</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .animate-fadeIn { animation: fadeIn 1s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-<div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-md">
-    <h2 class="text-3xl font-bold text-red-600 mb-6 text-center"
-        th:text="${factura.numero == null ? 'Crear Nueva Factura' : 'Editar Factura'}"></h2>
+<body class="min-h-screen bg-gradient-to-br from-red-100 via-pink-100 to-purple-100 flex items-center justify-center">
 
-    <form th:action="@{/guardar-factura}" method="post" th:object="${factura}">
-        <div th:hidden="${factura.numero == null}" class="mb-4">
-            <label for="numero-hidden" class="block text-gray-700 text-sm font-medium mb-2">Número</label>
-            <input type="number" class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight bg-gray-100" id="numero-hidden" th:field="*{numero}" >
-        </div>
+<div class="w-full max-w-lg animate-fadeIn">
 
-        <div class="mb-4">
-            <label for="cliente" class="block text-gray-700 text-sm font-medium mb-2">Cliente</label>
-            <select id="cliente" class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500" th:field="*{cliente.cedula}" >
-                <option value="">Seleccione un cliente</option>
-                <option th:each="cli : ${clientes}"
-                        th:value="${cli.cedula}" th:text="${cli.nombre + ' ' + cli.apellido}"
-                        th:selected="${factura.cliente != null and factura.cliente.cedula == cli.cedula}"></option>
-            </select>
-        </div>
-        <div class="mb-4">
-            <label for="producto" class="block text-gray-700 text-sm font-medium mb-2">Producto</label>
-            <select id="producto" class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500" th:field="*{producto.codigo}" >
-                <option value="">Seleccione un producto</option>
-                <option th:each="prod : ${productos}"
-                        th:value="${prod.codigo}" th:text="${prod.nombre + ' ($' + prod.precioUnitario + ')'}"
-                        th:selected="${factura.producto != null and factura.producto.codigo == prod.codigo}"></option>
-            </select>
-            <span th:if="${#fields.hasErrors('producto')}" th:errors="*{producto}" class="text-red-500 text-xs"></span>
-        </div>
-        <div class="mb-4">
-            <label for="cantidad" class="block text-gray-700 text-sm font-medium mb-2">Cantidad</label>
-            <input type="number" class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500" id="cantidad" th:field="*{cantidad}" >
-            <span th:if="${#fields.hasErrors('cantidad')}" th:errors="*{cantidad}" class="text-red-500 text-xs"></span>
-        </div>
-        <div class="mb-4">
-            <label for="precio" class="block text-gray-700 text-sm font-medium mb-2">Precio Unitario en Factura</label>
-            <input type="number" step="0.01" class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500" id="precio" th:field="*{precio}">
-            <span th:if="${#fields.hasErrors('precio')}" th:errors="*{precio}" class="text-red-500 text-xs"></span>
-        </div>
-        <div class="mb-4">
-            <label for="subtotal" class="block text-gray-700 text-sm font-medium mb-2">Subtotal</label>
-            <input type="number" step="0.01" class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500" id="subtotal" th:field="*{subtotal}">
-        </div>
-        <div class="mb-6">
-            <label for="total" class="block text-gray-700 text-sm font-medium mb-2">Total</label>
-            <input type="number" step="0.01" class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500" id="total" th:field="*{total}" >
-        </div>
+    <div class="bg-gradient-to-r from-red-400 via-pink-400 to-purple-400 rounded-t-3xl shadow-lg p-6 text-center">
+        <h1 class="text-3xl font-extrabold text-white mb-2 tracking-wide drop-shadow">¡Factura Belleza!</h1>
+        <p class="text-white/90">Completa los datos de la factura</p>
+    </div>
 
-        <div class="flex flex-col space-y-3">
-            <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline transition duration-200 ease-in-out">
-                Guardar Factura
-            </button>
-            <a th:href="@{/facturas}" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-md text-center transition duration-200 ease-in-out">
-                Cancelar y Volver
-            </a>
-        </div>
-    </form>
+    <div class="bg-white rounded-b-3xl shadow-2xl px-10 py-8">
+        <h2 class="text-2xl font-bold text-red-600 mb-6 text-center"
+            th:text="${factura.numero == null ? 'Crear Nueva Factura' : 'Editar Factura'}"></h2>
+        <form th:action="@{/guardar-factura}" method="post" th:object="${factura}" class="space-y-5">
+            <!-- Número -->
+            <div th:hidden="${factura.numero == null}">
+                <label for="numero-hidden" class="block text-gray-700 text-sm font-medium mb-1">Número</label>
+                <div class="relative">
+                    <span class="absolute left-3 top-2.5 text-red-400"><i class="fa fa-hashtag"></i></span>
+                    <input type="number" id="numero-hidden" th:field="*{numero}"
+                           class="pl-10 pr-3 py-2 w-full rounded-lg border border-red-200 bg-gray-100 text-gray-700 shadow-sm transition" readonly>
+                </div>
+            </div>
+
+            <div>
+                <label for="cliente" class="block text-gray-700 text-sm font-medium mb-1">Cliente</label>
+                <div class="relative">
+                    <span class="absolute left-3 top-2.5 text-red-400"><i class="fa fa-user"></i></span>
+                    <select id="cliente" th:field="*{cliente.cedula}"
+                            class="pl-10 pr-3 py-2 w-full rounded-lg border border-red-200 focus:ring-2 focus:ring-red-400 text-gray-700 shadow-sm transition">
+                        <option value="">Seleccione un cliente</option>
+                        <option th:each="cli : ${clientes}"
+                                th:value="${cli.cedula}" th:text="${cli.nombre + ' ' + cli.apellido}"
+                                th:selected="${factura.cliente != null and factura.cliente.cedula == cli.cedula}"></option>
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <label for="producto" class="block text-gray-700 text-sm font-medium mb-1">Producto</label>
+                <div class="relative">
+                    <span class="absolute left-3 top-2.5 text-red-400"><i class="fa fa-box"></i></span>
+                    <select id="producto" th:field="*{producto.codigo}"
+                            class="pl-10 pr-3 py-2 w-full rounded-lg border border-red-200 focus:ring-2 focus:ring-red-400 text-gray-700 shadow-sm transition">
+                        <option value="">Seleccione un producto</option>
+                        <option th:each="prod : ${productos}"
+                                th:value="${prod.codigo}" th:text="${prod.nombre + ' ($' + prod.precioUnitario + ')'}"
+                                th:selected="${factura.producto != null and factura.producto.codigo == prod.codigo}"></option>
+                    </select>
+                </div>
+                <span th:if="${#fields.hasErrors('producto')}" th:errors="*{producto}" class="text-red-500 text-xs"></span>
+            </div>
+
+            <div>
+                <label for="cantidad" class="block text-gray-700 text-sm font-medium mb-1">Cantidad</label>
+                <div class="relative">
+                    <span class="absolute left-3 top-2.5 text-red-400"><i class="fa fa-sort-numeric-up"></i></span>
+                    <input type="number" id="cantidad" th:field="*{cantidad}"
+                           class="pl-10 pr-3 py-2 w-full rounded-lg border border-red-200 focus:ring-2 focus:ring-red-400 text-gray-700 shadow-sm transition">
+                </div>
+                <span th:if="${#fields.hasErrors('cantidad')}" th:errors="*{cantidad}" class="text-red-500 text-xs"></span>
+            </div>
+
+            <div>
+                <label for="precio" class="block text-gray-700 text-sm font-medium mb-1">Precio Unitario en Factura</label>
+                <div class="relative">
+                    <span class="absolute left-3 top-2.5 text-red-400"><i class="fa fa-dollar-sign"></i></span>
+                    <input type="number" step="0.01" id="precio" th:field="*{precio}"
+                           class="pl-10 pr-3 py-2 w-full rounded-lg border border-red-200 focus:ring-2 focus:ring-red-400 text-gray-700 shadow-sm transition">
+                </div>
+                <span th:if="${#fields.hasErrors('precio')}" th:errors="*{precio}" class="text-red-500 text-xs"></span>
+            </div>
+
+            <div>
+                <label for="subtotal" class="block text-gray-700 text-sm font-medium mb-1">Subtotal</label>
+                <div class="relative">
+                    <span class="absolute left-3 top-2.5 text-red-400"><i class="fa fa-calculator"></i></span>
+                    <input type="number" step="0.01" id="subtotal" th:field="*{subtotal}"
+                           class="pl-10 pr-3 py-2 w-full rounded-lg border border-red-200 focus:ring-2 focus:ring-red-400 text-gray-700 shadow-sm transition">
+                </div>
+            </div>
+
+            <div>
+                <label for="total" class="block text-gray-700 text-sm font-medium mb-1">Total</label>
+                <div class="relative">
+                    <span class="absolute left-3 top-2.5 text-red-400"><i class="fa fa-money-bill-wave"></i></span>
+                    <input type="number" step="0.01" id="total" th:field="*{total}"
+                           class="pl-10 pr-3 py-2 w-full rounded-lg border border-red-200 focus:ring-2 focus:ring-red-400 text-gray-700 shadow-sm transition">
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row gap-4 mt-6">
+                <button type="submit"
+                        class="w-full bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white font-bold py-2 rounded-lg shadow-lg transition transform hover:scale-105 duration-200">
+                    <i class="fa fa-save mr-2"></i> Guardar Factura
+                </button>
+                <a th:href="@{/facturas}"
+                   class="w-full bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-2 rounded-lg text-center shadow transition transform hover:scale-105 duration-200">
+                    <i class="fa fa-arrow-left mr-2"></i> Cancelar y Volver
+                </a>
+            </div>
+        </form>
+    </div>
 </div>
-
 </body>
-
-
 </html>

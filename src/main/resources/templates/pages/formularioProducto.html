@@ -1,56 +1,87 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <title>Formulario Producto</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <title>Producto</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .animate-fadeIn { animation: fadeIn 1s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
 </head>
+<body class="min-h-screen bg-gradient-to-br from-green-100 via-teal-100 to-blue-100 flex items-center justify-center">
 
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-<div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-md">
-    <h2 class="text-3xl font-bold text-green-600 mb-6 text-center"
-        th:text="${producto.codigo == null ? 'Registrar Nuevo Producto' : 'Editar Producto'}"></h2>
+<div class="w-full max-w-lg animate-fadeIn">
 
-    <form th:action="@{/guardar-producto}" method="post" th:object="${producto}">
-        <div th:hidden="${producto.codigo == null}" class="mb-4">
-            <label for="codigo-hidden" class="block text-gray-700 text-sm font-medium mb-2">Código</label>
-            <input type="number" class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight bg-gray-100" id="codigo-hidden" th:field="*{codigo}">
-        </div>
+    <div class="bg-gradient-to-r from-green-400 via-teal-400 to-blue-400 rounded-t-3xl shadow-lg p-6 text-center">
+        <h1 class="text-3xl font-extrabold text-white mb-2 tracking-wide drop-shadow">¡Producto Belleza!</h1>
+        <p class="text-white/90">Completa los datos del producto</p>
+    </div>
 
-        <div class="mb-4">
-            <label for="nombre" class="block text-gray-700 text-sm font-medium mb-2">Nombre</label>
-            <input type="text" class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500" id="nombre" th:field="*{nombre}">
-            <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="text-red-500 text-xs"></span>
-        </div>
-        <div class="mb-4">
-            <label for="precioUnitario" class="block text-gray-700 text-sm font-medium mb-2">Precio Unitario</label>
-            <input type="number" step="0.01" class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500" id="precioUnitario" th:field="*{precioUnitario}">
-            <span th:if="${#fields.hasErrors('precioUnitario')}" th:errors="*{precioUnitario}" class="text-red-500 text-xs"></span>
-        </div>
-        <div class="mb-6">
-            <label for="proveedor" class="block text-gray-700 text-sm font-medium mb-2">Proveedor</label>
-            <select id="proveedor" class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500" th:field="*{proveedor.codigo}">
-                <option th:each="prov : ${proveedores}"
-                        th:value="${prov.codigo}" th:text="${prov.nombre}">
-                    Seleccione un proveedor
-                </option>
-            </select>
-            <span th:if="${#fields.hasErrors('proveedor')}" th:errors="*{proveedor}" class="text-red-500 text-xs"></span>
-        </div>
-        <div class="flex flex-col space-y-3">
-            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline transition duration-200 ease-in-out">
-                Guardar Producto
-            </button>
-            <a th:href="@{/productos}" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-md text-center transition duration-200 ease-in-out">
-                Cancelar y Volver
-            </a>
-        </div>
-    </form>
+    <div class="bg-white rounded-b-3xl shadow-2xl px-10 py-8">
+        <h2 class="text-2xl font-bold text-green-600 mb-6 text-center"
+            th:text="${producto.codigo == null ? 'Registrar Nuevo Producto' : 'Editar Producto'}"></h2>
+        <form th:action="@{/guardar-producto}" method="post" th:object="${producto}" class="space-y-5">
+            <!-- Código -->
+            <div th:hidden="${producto.codigo == null}">
+                <label for="codigo-hidden" class="block text-gray-700 text-sm font-medium mb-1">Código</label>
+                <div class="relative">
+                    <span class="absolute left-3 top-2.5 text-green-400"><i class="fa fa-barcode"></i></span>
+                    <input type="number" id="codigo-hidden" th:field="*{codigo}"
+                           class="pl-10 pr-3 py-2 w-full rounded-lg border border-green-200 bg-gray-100 text-gray-700 shadow-sm transition" readonly>
+                </div>
+            </div>
+
+            <div>
+                <label for="nombre" class="block text-gray-700 text-sm font-medium mb-1">Nombre</label>
+                <div class="relative">
+                    <span class="absolute left-3 top-2.5 text-green-400"><i class="fa fa-tag"></i></span>
+                    <input type="text" id="nombre" th:field="*{nombre}"
+                           class="pl-10 pr-3 py-2 w-full rounded-lg border border-green-200 focus:ring-2 focus:ring-green-400 text-gray-700 shadow-sm transition">
+                </div>
+                <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="text-red-500 text-xs"></span>
+            </div>
+
+            <div>
+                <label for="precioUnitario" class="block text-gray-700 text-sm font-medium mb-1">Precio Unitario</label>
+                <div class="relative">
+                    <span class="absolute left-3 top-2.5 text-green-400"><i class="fa fa-dollar-sign"></i></span>
+                    <input type="number" step="0.01" id="precioUnitario" th:field="*{precioUnitario}"
+                           class="pl-10 pr-3 py-2 w-full rounded-lg border border-green-200 focus:ring-2 focus:ring-green-400 text-gray-700 shadow-sm transition">
+                </div>
+                <span th:if="${#fields.hasErrors('precioUnitario')}" th:errors="*{precioUnitario}" class="text-red-500 text-xs"></span>
+            </div>
+
+            <div>
+                <label for="proveedor" class="block text-gray-700 text-sm font-medium mb-1">Proveedor</label>
+                <div class="relative">
+                    <span class="absolute left-3 top-2.5 text-green-400"><i class="fa fa-truck"></i></span>
+                    <select id="proveedor" th:field="*{proveedor.codigo}"
+                            class="pl-10 pr-3 py-2 w-full rounded-lg border border-green-200 focus:ring-2 focus:ring-green-400 text-gray-700 shadow-sm transition">
+                        <option value="">Seleccione un proveedor</option>
+                        <option th:each="prov : ${proveedores}"
+                                th:value="${prov.codigo}" th:text="${prov.nombre}"
+                                th:selected="${producto.proveedor != null and producto.proveedor.codigo == prov.codigo}"></option>
+                    </select>
+                </div>
+                <span th:if="${#fields.hasErrors('proveedor')}" th:errors="*{proveedor}" class="text-red-500 text-xs"></span>
+            </div>
+
+            <div class="flex flex-col md:flex-row gap-4 mt-6">
+                <button type="submit"
+                        class="w-full bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white font-bold py-2 rounded-lg shadow-lg transition transform hover:scale-105 duration-200">
+                    <i class="fa fa-save mr-2"></i> Guardar Producto
+                </button>
+                <a th:href="@{/productos}"
+                   class="w-full bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-2 rounded-lg text-center shadow transition transform hover:scale-105 duration-200">
+                    <i class="fa fa-arrow-left mr-2"></i> Cancelar y Volver
+                </a>
+            </div>
+        </form>
+    </div>
 </div>
-
 </body>
-
-
 </html>

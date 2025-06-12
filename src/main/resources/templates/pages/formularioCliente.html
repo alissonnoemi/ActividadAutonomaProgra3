@@ -1,61 +1,100 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <title>Formulario Cliente</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <title>Formulario Cliente</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .animate-fadeIn { animation: fadeIn 1s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-<div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-md">
-    <h2 class="text-3xl font-bold text-blue-600 mb-6 text-center"
-        th:text="${cliente.cedula == null ? 'Registrar Nuevo Cliente' : 'Editar Cliente'}"></h2>
+<body class="min-h-screen bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 flex items-center justify-center">
 
-    <form th:action="@{/guardar-cliente}" method="post" th:object="${cliente}">
-        <div th:hidden="${cliente.cedula == null}" class="mb-4">
-            <label for="cedula-hidden" class="block text-gray-700 text-sm font-medium mb-2">Cédula (oculta para edición)</label>
-            <input type="text" class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-100" id="cedula-hidden" th:field="*{cedula}" >
-        </div>
-        <div th:unless="${cliente.cedula != null}" class="mb-4">
-            <label for="cedula" class="block text-gray-700 text-sm font-medium mb-2">Cédula</label>
-            <input type="text" class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" id="cedula" th:field="*{cedula}" >
-        </div>
+<div class="w-full max-w-lg animate-fadeIn">
 
-        <div class="mb-4">
-            <label for="nombre" class="block text-gray-700 text-sm font-medium mb-2">Nombre</label>
-            <input type="text" class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" id="nombre" th:field="*{nombre}" >
-            <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="text-red-500 text-xs"></span>
-        </div>
-        <div class="mb-4">
-            <label for="apellido" class="block text-gray-700 text-sm font-medium mb-2">Apellido</label>
-            <input type="text" class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" id="apellido" th:field="*{apellido}">
-            <span th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}" class="text-red-500 text-xs"></span>
-        </div>
-        <div class="mb-4">
-            <label for="direccion" class="block text-gray-700 text-sm font-medium mb-2">Dirección</label>
-            <input type="text" class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" id="direccion" th:field="*{direccion}" >
-            <span th:if="${#fields.hasErrors('direccion')}" th:errors="*{direccion}" class="text-red-500 text-xs"></span>
-        </div>
-        <div class="mb-6">
-            <label for="fechaNacimiento" class="block text-gray-700 text-sm font-medium mb-2">Fecha de Nacimiento</label>
-            <input type="date" class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" id="fechaNacimiento" th:field="*{fechaNacimiento}">
-            <span th:if="${#fields.hasErrors('fechaNacimiento')}" th:errors="*{fechaNacimiento}" class="text-red-500 text-xs"></span>
-        </div>
+    <div class="bg-gradient-to-r from-pink-400 via-pink-300 to-purple-400 rounded-t-3xl shadow-lg p-6 text-center">
+        <h1 class="text-3xl font-extrabold text-white mb-2 tracking-wide drop-shadow">¡Bienvenida a Belleza!</h1>
+        <p class="text-white/90">Completa tus datos para continuar</p>
+    </div>
 
-        <div class="flex flex-col space-y-3">
-            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline transition duration-200 ease-in-out">
-                Guardar Cliente
-            </button>
-            <a th:href="@{/clientes}" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-md text-center transition duration-200 ease-in-out">
-                Cancelar y Volver
-            </a>
-        </div>
-    </form>
+    <div class="bg-white rounded-b-3xl shadow-2xl px-10 py-8">
+        <h2 class="text-2xl font-bold text-pink-600 mb-6 text-center"
+            th:text="${cliente.cedula == null ? 'Registrar Nuevo Cliente' : 'Editar Cliente'}"></h2>
+        <form th:action="@{/guardar-cliente}" method="post" th:object="${cliente}" class="space-y-5">
+
+            <div th:hidden="${cliente.cedula == null}">
+                <label for="cedula-hidden" class="block text-gray-700 text-sm font-medium mb-1">Cédula</label>
+                <div class="relative">
+                    <span class="absolute left-3 top-2.5 text-pink-400"><i class="fa fa-id-card"></i></span>
+                    <input type="text" id="cedula-hidden" th:field="*{cedula}"
+                           class="pl-10 pr-3 py-2 w-full rounded-lg border border-pink-200 focus:ring-2 focus:ring-pink-400 bg-gray-100 text-gray-700 shadow-sm transition" readonly>
+                </div>
+            </div>
+            <div th:unless="${cliente.cedula != null}">
+                <label for="cedula" class="block text-gray-700 text-sm font-medium mb-1">Cédula</label>
+                <div class="relative">
+                    <span class="absolute left-3 top-2.5 text-pink-400"><i class="fa fa-id-card"></i></span>
+                    <input type="text" id="cedula" th:field="*{cedula}"
+                           class="pl-10 pr-3 py-2 w-full rounded-lg border border-pink-200 focus:ring-2 focus:ring-pink-400 text-gray-700 shadow-sm transition">
+                </div>
+            </div>
+
+            <div>
+                <label for="nombre" class="block text-gray-700 text-sm font-medium mb-1">Nombre</label>
+                <div class="relative">
+                    <span class="absolute left-3 top-2.5 text-pink-400"><i class="fa fa-user"></i></span>
+                    <input type="text" id="nombre" th:field="*{nombre}"
+                           class="pl-10 pr-3 py-2 w-full rounded-lg border border-pink-200 focus:ring-2 focus:ring-pink-400 text-gray-700 shadow-sm transition">
+                </div>
+                <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="text-red-500 text-xs"></span>
+            </div>
+
+            <div>
+                <label for="apellido" class="block text-gray-700 text-sm font-medium mb-1">Apellido</label>
+                <div class="relative">
+                    <span class="absolute left-3 top-2.5 text-pink-400"><i class="fa fa-user-tag"></i></span>
+                    <input type="text" id="apellido" th:field="*{apellido}"
+                           class="pl-10 pr-3 py-2 w-full rounded-lg border border-pink-200 focus:ring-2 focus:ring-pink-400 text-gray-700 shadow-sm transition">
+                </div>
+                <span th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}" class="text-red-500 text-xs"></span>
+            </div>
+
+            <div>
+                <label for="direccion" class="block text-gray-700 text-sm font-medium mb-1">Dirección</label>
+                <div class="relative">
+                    <span class="absolute left-3 top-2.5 text-pink-400"><i class="fa fa-map-marker-alt"></i></span>
+                    <input type="text" id="direccion" th:field="*{direccion}"
+                           class="pl-10 pr-3 py-2 w-full rounded-lg border border-pink-200 focus:ring-2 focus:ring-pink-400 text-gray-700 shadow-sm transition">
+                </div>
+                <span th:if="${#fields.hasErrors('direccion')}" th:errors="*{direccion}" class="text-red-500 text-xs"></span>
+            </div>
+
+            <div>
+                <label for="fechaNacimiento" class="block text-gray-700 text-sm font-medium mb-1">Fecha de Nacimiento</label>
+                <div class="relative">
+                    <span class="absolute left-3 top-2.5 text-pink-400"><i class="fa fa-calendar-alt"></i></span>
+                    <input type="date" id="fechaNacimiento" th:field="*{fechaNacimiento}"
+                           class="pl-10 pr-3 py-2 w-full rounded-lg border border-pink-200 focus:ring-2 focus:ring-pink-400 text-gray-700 shadow-sm transition">
+                </div>
+                <span th:if="${#fields.hasErrors('fechaNacimiento')}" th:errors="*{fechaNacimiento}" class="text-red-500 text-xs"></span>
+            </div>
+
+            <div class="flex flex-col md:flex-row gap-4 mt-6">
+                <button type="submit"
+                        class="w-full bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-bold py-2 rounded-lg shadow-lg transition transform hover:scale-105 duration-200">
+                    <i class="fa fa-save mr-2"></i> Guardar Cliente
+                </button>
+                <a th:href="@{/clientes}"
+                   class="w-full bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-2 rounded-lg text-center shadow transition transform hover:scale-105 duration-200">
+                    <i class="fa fa-arrow-left mr-2"></i> Cancelar y Volver
+                </a>
+            </div>
+        </form>
+    </div>
 </div>
-
 </body>
-
-
-
 </html>

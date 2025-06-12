@@ -41,11 +41,13 @@ public class ProductoController {
 
     @PostMapping("/guardar-producto")
     public String guardarProducto(@Valid @ModelAttribute Producto producto,
-     BindingResult bindingResult,Model model){
-        if(bindingResult.hasErrors()){
+                                  BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
             model.addAttribute("errors", bindingResult.getAllErrors());
-            return  "pages/formularioProducto";
+            model.addAttribute("proveedores", proveedorServicio.mostrarProveedores());
+            return "pages/formularioProducto";
         } else {
+            productoServicio.guardarProducto(producto); // Guarda el producto
             return "redirect:/productos";
         }
     }
