@@ -1,10 +1,10 @@
 package com.itsqmet.tiendaBeauty.Controller;
 
-import com.itsqmet.tiendaBeauty.Entity.Cliente;
 import com.itsqmet.tiendaBeauty.Entity.Factura;
 import com.itsqmet.tiendaBeauty.Entity.Producto;
-import com.itsqmet.tiendaBeauty.Service.ClienteServicio;
+import com.itsqmet.tiendaBeauty.Entity.Usuario;
 import com.itsqmet.tiendaBeauty.Service.ProductoServicio;
+import com.itsqmet.tiendaBeauty.Service.UsuarioServicio;
 import com.itsqmet.tiendaBeauty.Service.facturaServicio;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class FacturaController {
     @Autowired
     private facturaServicio facturaServicio;
     @Autowired
-    private ClienteServicio clienteServicio;
+    private UsuarioServicio usuarioServicio;
     @Autowired
     private ProductoServicio productoServicio;
 
@@ -37,12 +37,13 @@ public class FacturaController {
         model.addAttribute("facturas", facturas);
         return "pages/listaFacturas";
     }
+
     @GetMapping("/formularioFactura")
     public String formularioFactura(Model model){
         model.addAttribute("factura", new Factura());
-        List<Cliente> clientes = clienteServicio.mostrarClientes();
+        List<Usuario> usuarios = usuarioServicio.findByRol("cliente");
         List<Producto> productos = productoServicio.mostrarProductos();
-        model.addAttribute("clientes", clientes);
+        model.addAttribute("usuarios", usuarios);
         model.addAttribute("productos", productos);
         return "pages/formularioFactura";
     }
@@ -57,11 +58,11 @@ public class FacturaController {
             return "redirect:/facturas";
         }
     }
-    @GetMapping("/editar-factura/{numero}")
+    @GetMapping("/editarFactura/{numero}")
     public String actualizarFactura(@PathVariable Long numero, Model model){
         Optional<Factura> factura = facturaServicio.buscarFacturaPorNumero(numero);
         model.addAttribute("factura", factura.orElse(new Factura()));
-        model.addAttribute("clientes", clienteServicio.mostrarClientes());
+        model.addAttribute("usuarios", usuarioServicio.mostrarListaUusarios());
         model.addAttribute("productos", productoServicio.mostrarProductos());
         return "pages/formularioFactura";
     }

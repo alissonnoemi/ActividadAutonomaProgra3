@@ -36,15 +36,15 @@
             </div>
 
             <div>
-                <label for="cliente" class="block text-gray-700 text-sm font-medium mb-1">Cliente</label>
+                <label for="usuario" class="block text-gray-700 text-sm font-medium mb-1">Cliente</label>
                 <div class="relative">
                     <span class="absolute left-3 top-2.5 text-red-400"><i class="fa fa-user"></i></span>
-                    <select id="cliente" th:field="*{cliente.cedula}"
+                    <select id="usuario" th:field="*{usuario.id}"
                             class="pl-10 pr-3 py-2 w-full rounded-lg border border-red-200 focus:ring-2 focus:ring-red-400 text-gray-700 shadow-sm transition">
                         <option value="">Seleccione un cliente</option>
-                        <option th:each="cli : ${clientes}"
-                                th:value="${cli.cedula}" th:text="${cli.nombre + ' ' + cli.apellido}"
-                                th:selected="${factura.cliente != null and factura.cliente.cedula == cli.cedula}"></option>
+                        <option th:each="usuario : ${usuarios}"
+                                th:value="${usuario.id}" th:text="${usuario.nombre}"
+                                th:selected="${factura.usuario != null and factura.usuario.id == usuario.id}"></option>
                     </select>
                 </div>
             </div>

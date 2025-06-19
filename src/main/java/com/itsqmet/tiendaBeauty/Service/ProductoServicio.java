@@ -1,6 +1,5 @@
 package com.itsqmet.tiendaBeauty.Service;
 
-import com.itsqmet.tiendaBeauty.Entity.Cliente;
 import com.itsqmet.tiendaBeauty.Entity.Producto;
 import com.itsqmet.tiendaBeauty.Repository.productoRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;

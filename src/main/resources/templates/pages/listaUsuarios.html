@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Usuarios</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .animate-fadeIn { animation: fadeIn 1s ease-in; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-blue-100 via-pink-100 to-purple-100 flex items-center justify-center">
+
+<nav class="bg-blue-600 p-4 shadow-md w-full absolute top-0 left-0">
+  <div class="container mx-auto flex justify-between items-center">
+    <span class="text-white text-3xl font-bold">Lista de Usuarios</span>
+    <button class="block lg:hidden text-white focus:outline-none" type="button" id="navbar-toggle">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+      </svg>
+    </button>
+    <div class="hidden lg:flex" id="navbar-menu">
+      <ul class="flex space-x-4">
+        <li>
+          <a class="text-white hover:text-blue-200 text-lg font-semibold" th:href="@{/}">Biblioteca</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const navbarToggle = document.getElementById('navbar-toggle');
+      const navbarMenu = document.getElementById('navbar-menu');
+      if (navbarToggle && navbarMenu) {
+          navbarToggle.onclick = function () {
+              navbarMenu.classList.toggle('hidden');
+          };
+      }
+  });
+</script>
+
+<div class="w-full max-w-5xl animate-fadeIn mt-24 lg:mt-0">
+  <div class="bg-gradient-to-r from-blue-400 via-pink-400 to-purple-400 rounded-t-3xl shadow-lg p-6 text-center">
+    <h2 class="text-3xl font-extrabold text-white mb-2 tracking-wide drop-shadow">Listado de Usuarios</h2>
+    <p class="text-white/90">Consulta, edita o elimina usuarios registrados</p>
+  </div>
+
+  <div class="bg-white rounded-b-3xl shadow-2xl px-8 py-8">
+
+    <form th:action="@{/usuarios}" method="get" class="mb-6 flex items-center gap-2">
+      <div class="relative flex-grow">
+        <span class="absolute left-3 top-2.5 text-blue-400"><i class="fa fa-search"></i></span>
+        <input type="text" name="buscarUsuario"
+               class="pl-10 pr-3 py-2 w-full rounded-lg border border-blue-200 focus:ring-2 focus:ring-blue-400 text-gray-700 shadow-sm transition"
+               placeholder="Buscar por nombre de usuario..." th:value="${buscarUsuario}">
+      </div>
+      <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow transition transform hover:scale-105 duration-200" type="submit">
+        <i class="fa fa-search mr-1"></i>Buscar
+      </button>
+    </form>
+
+    <div class="overflow-x-auto rounded-lg shadow-md">
+      <table class="min-w-full leading-normal">
+        <thead>
+        <tr class="bg-blue-600 text-white text-left text-sm font-semibold uppercase tracking-wider">
+          <th class="px-5 py-3 border-b-2 border-blue-700"><i class="fa fa-hashtag mr-1"></i>Id</th>
+          <th class="px-5 py-3 border-b-2 border-blue-700"><i class="fa fa-user mr-1"></i>Nombre</th>
+          <th class="px-5 py-3 border-b-2 border-blue-700"><i class="fa fa-envelope mr-1"></i>Email</th>
+          <th class="px-5 py-3 border-b-2 border-blue-700"><i class="fa fa-user-circle mr-1"></i>Username</th>
+          <th class="px-5 py-3 border-b-2 border-blue-700"><i class="fa fa-users-cog mr-1"></i>Rol</th>
+          <th class="px-5 py-3 border-b-2 border-blue-700 text-center"><i class="fa fa-cogs mr-1"></i>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="usuario : ${usuarios}" class="hover:bg-blue-50 transition">
+          <td class="px-5 py-3 border-b border-gray-200 text-sm text-gray-800" th:text="${usuario.id}"></td>
+          <td class="px-5 py-3 border-b border-gray-200 text-sm text-gray-800" th:text="${usuario.nombre}"></td>
+          <td class="px-5 py-3 border-b border-gray-200 text-sm text-gray-800" th:text="${usuario.email}"></td>
+          <td class="px-5 py-3 border-b border-gray-200 text-sm text-gray-800" th:text="${usuario.username}"></td>
+          <td class="px-5 py-3 border-b border-gray-200 text-sm text-gray-800" th:text="${usuario.rol.nombre}"></td>
+          <td class="px-5 py-3 border-b border-gray-200 text-sm text-center">
+            <a th:href="@{/editar-usuario/} + ${usuario.id}"
+               class="inline-flex items-center bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold py-1 px-3 rounded-lg mr-2 shadow transition transform hover:scale-105 duration-200">
+              <i class="fa fa-edit mr-1"></i>Editar
+            </a>
+            <a th:href="@{/eliminar-usuario/} + ${usuario.id}"
+               class="inline-flex items-center bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded-lg shadow transition transform hover:scale-105 duration-200"
+               onclick="return confirm('¿Está seguro de que desea eliminar este usuario?');">
+              <i class="fa fa-trash mr-1"></i>Eliminar
+            </a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="flex justify-between items-center mt-6">
+      <a th:href="@{/formularioUsuario}"
+         class="inline-flex items-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg shadow transition transform hover:scale-105 duration-200">
+        <i class="fa fa-plus mr-2"></i>Registrar Nuevo Usuario
+      </a>
+      <form th:action="@{/logout}" method="post">
+        <button type="submit" class="inline-flex items-center bg-gray-700 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded-lg shadow transition transform hover:scale-105 duration-200">
+          <i class="fa fa-sign-out-alt mr-2"></i>Cerrar sesión
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+
+</body>
+</html>

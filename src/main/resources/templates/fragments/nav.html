@@ -52,9 +52,11 @@
                         <div class="py-1">
                             <a th:href="@{/marcas}" class="block px-4 py-2 text-sm font-semibold text-indigo-600 hover:bg-indigo-50 rounded">Ver todas</a>
                         </div>
+                        <div class="py-1">
+                            <a th:href="@{/formularioUsuario}" class="block px-4 py-2 text-sm font-semibold text-indigo-600 hover:bg-indigo-50 rounded">Inicia Sesion</a>
+                        </div>
                     </div>
                 </li>
-
                 <li>
                     <button id="tiendaDropdownButton" data-dropdown-toggle="tiendaDropdown" class="flex items-center py-2 px-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-indigo-600 md:p-0" type="button">
                         Formularios
@@ -64,7 +66,6 @@
                     </button>
                     <div id="tiendaDropdown" class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-48">
                         <ul class="py-2 text-sm text-gray-700" aria-labelledby="tiendaDropdownButton">
-                            <li><a th:href="@{/formularioCliente}" class="block px-4 py-2 hover:bg-indigo-50 rounded">Cliente</a></li>
                             <li><a th:href="@{/formularioProducto}" class="block px-4 py-2 hover:bg-indigo-50 rounded">Producto</a></li>
                             <li><a th:href="@{/formularioProveedor}" class="block px-4 py-2 hover:bg-indigo-50 rounded">Proveedor</a></li>
                             <li><a th:href="@{/formularioFactura}" class="block px-4 py-2 hover:bg-indigo-50 rounded">Factura</a></li>

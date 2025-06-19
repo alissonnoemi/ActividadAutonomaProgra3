@@ -24,13 +24,13 @@ public class ProveedorController {
     public String listarProveedores(Model model){
         List<Proveedor> proveedores = proveedorServicio.mostrarProveedores();
         model.addAttribute("proveedores", proveedores);
-        return "pages/listaProveedores"; // Asumiendo que existe src/main/resources/templates/pages/listaProveedores.html
+        return "pages/listaProveedores";
     }
 
     @GetMapping("/formularioProveedor")
     public String formularioProveedor(Model model){
         model.addAttribute("proveedor", new Proveedor());
-        return "pages/formularioProveedor"; // Asumiendo que existe src/main/resources/templates/pages/formularioProveedor.html
+        return "pages/formularioProveedor";
     }
 
     @PostMapping("/guardar-proveedor")

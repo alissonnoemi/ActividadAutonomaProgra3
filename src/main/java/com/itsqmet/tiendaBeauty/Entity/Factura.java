@@ -20,7 +20,7 @@ public class Factura {
 
     @NotNull(message = "Debe seleccionar un cliente")
     @JoinColumn(name = "cedula_cliente")
-    private Cliente cliente;
+    private Usuario usuario;
     @NotNull(message = "Debe seleccionar un producto")
     @ManyToOne
     @JoinColumn(name = "codigo_producto")
@@ -35,4 +35,5 @@ public class Factura {
     private BigDecimal precio;
     private BigDecimal subtotal;
     private BigDecimal total;
+
 }

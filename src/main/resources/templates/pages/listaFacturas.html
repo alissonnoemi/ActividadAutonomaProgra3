@@ -47,7 +47,7 @@
                 <div class="mb-2">
                     <div class="flex justify-between">
                         <span class="font-semibold"><i class="fa fa-user mr-1 text-red-400"></i>Cliente:</span>
-                        <span th:text="${factura.cliente != null ? factura.cliente.nombre + ' ' + factura.cliente.apellido : 'N/A'}"></span>
+                        <span th:text="${factura.usuario != null} ? ${factura.usuario.nombre} : 'N/A'"></span>
                     </div>
                     <div class="flex justify-between">
                         <span class="font-semibold"><i class="fa fa-box mr-1 text-red-400"></i>Producto:</span>

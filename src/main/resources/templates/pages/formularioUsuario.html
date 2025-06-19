@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario Usuario</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .animate-fadeIn { animation: fadeIn 1s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-purple-100 via-indigo-100 to-blue-100 flex items-center justify-center">
+
+<nav class="bg-blue-600 p-4 shadow-md w-full absolute top-0 left-0">
+    <div class="container mx-auto flex justify-between items-center">
+        <span class="text-white text-3xl font-bold">Registro de Usuarios</span>
+        <button class="block lg:hidden text-white focus:outline-none" type="button" id="navbar-toggle">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+        </button>
+        <div class="hidden lg:flex" id="navbar-menu">
+            <ul class="flex space-x-4">
+                <li>
+                    <a class="text-white hover:text-blue-200 text-lg font-semibold" th:href="@{/}">Biblioteca</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const navbarToggle = document.getElementById('navbar-toggle');
+        const navbarMenu = document.getElementById('navbar-menu');
+        if (navbarToggle && navbarMenu) {
+            navbarToggle.onclick = function () {
+                navbarMenu.classList.toggle('hidden');
+            };
+        }
+    });
+</script>
+
+<div class="w-full max-w-lg animate-fadeIn mt-24 lg:mt-0"> <div class="bg-gradient-to-r from-blue-500 via-blue-400 to-indigo-500 rounded-t-3xl shadow-lg p-6 text-center">
+    <h1 class="text-3xl font-extrabold text-white mb-2 tracking-wide drop-shadow">Bienvenido a Usuarios</h1>
+    <p class="text-white/90">Completa los datos del usuario</p>
+</div>
+
+    <div class="bg-white rounded-b-3xl shadow-2xl px-10 py-8">
+        <h2 class="text-2xl font-bold text-blue-600 mb-6 text-center"
+            th:text="${usuario.id == null ? 'Registrar Nuevo Usuario' : 'Editar Usuario'}"></h2>
+        <form th:action="@{/guardarUsuario}" method="post" th:object="${usuario}" class="space-y-5">
+
+            <div th:hidden="${usuario.id == null}">
+                <label for="codigo-hidden" class="block text-gray-700 text-sm font-medium mb-1">Código</label>
+                <div class="relative">
+                    <span class="absolute left-3 top-2.5 text-blue-400"><i class="fa fa-hashtag"></i></span>
+                    <input type="number" id="codigo-hidden" th:field="*{id}"
+                           class="pl-10 pr-3 py-2 w-full rounded-lg border border-blue-200 focus:ring-2 focus:ring-blue-400 bg-gray-100 text-gray-700 shadow-sm transition" readonly>
+                </div>
+            </div>
+            <div th:unless="${usuario.id != null}">
+                <label for="codigo" class="block text-gray-700 text-sm font-medium mb-1">Código</label>
+                <div class="relative">
+                    <span class="absolute left-3 top-2.5 text-blue-400"><i class="fa fa-hashtag"></i></span>
+                    <input type="number" id="codigo" th:field="*{id}"
+                           class="pl-10 pr-3 py-2 w-full rounded-lg border border-blue-200 focus:ring-2 focus:ring-blue-400 text-gray-700 shadow-sm transition">
+                </div>
+            </div>
+
+            <div>
+                <label for="nombre" class="block text-gray-700 text-sm font-medium mb-1">Nombre</label>
+                <div class="relative">
+                    <span class="absolute left-3 top-2.5 text-blue-400"><i class="fa fa-user"></i></span>
+                    <input type="text" id="nombre" th:field="*{nombre}"
+                           class="pl-10 pr-3 py-2 w-full rounded-lg border border-blue-200 focus:ring-2 focus:ring-blue-400 text-gray-700 shadow-sm transition">
+                </div>
+            </div>
+
+            <div>
+                <label for="direccion" class="block text-gray-700 text-sm font-medium mb-1">Dirección:</label>
+                <div class="relative">
+                    <span class="absolute left-3 top-2.5 text-blue-400"><i class="fa fa-map-marker-alt"></i></span>
+                    <input type="text" id="direccion" th:field="*{direccion}"
+                           class="pl-10 pr-3 py-2 w-full rounded-lg border border-blue-200 focus:ring-2 focus:ring-blue-400 text-gray-700 shadow-sm transition">
+                </div>
+            </div>
+
+            <div>
+                <label for="email" class="block text-gray-700 text-sm font-medium mb-1">Email:</label>
+                <div class="relative">
+                    <span class="absolute left-3 top-2.5 text-blue-400"><i class="fa fa-envelope"></i></span>
+                    <input type="email" id="email" th:field="*{email}"
+                           class="pl-10 pr-3 py-2 w-full rounded-lg border border-blue-200 focus:ring-2 focus:ring-blue-400 text-gray-700 shadow-sm transition">
+                </div>
+            </div>
+
+            <div>
+                <label for="username" class="block text-gray-700 text-sm font-medium mb-1">Nombre de Usuario:</label>
+                <div class="relative">
+                    <span class="absolute left-3 top-2.5 text-blue-400"><i class="fa fa-user-circle"></i></span>
+                    <input type="text" id="username" th:field="*{username}"
+                           class="pl-10 pr-3 py-2 w-full rounded-lg border border-blue-200 focus:ring-2 focus:ring-blue-400 text-gray-700 shadow-sm transition">
+                </div>
+            </div>
+
+            <div>
+                <label for="password" class="block text-gray-700 text-sm font-medium mb-1">Password:</label>
+                <div class="relative">
+                    <span class="absolute left-3 top-2.5 text-blue-400"><i class="fa fa-lock"></i></span>
+                    <input type="password" id="password" th:field="*{password}"
+                           class="pl-10 pr-3 py-2 w-full rounded-lg border border-blue-200 focus:ring-2 focus:ring-blue-400 text-gray-700 shadow-sm transition">
+                </div>
+            </div>
+
+            <div>
+                <label for="rol" class="block text-gray-700 text-sm font-medium mb-1">Rol</label>
+                <div class="relative">
+                    <span class="absolute left-3 top-2.5 text-blue-400"><i class="fa fa-users-cog"></i></span>
+                    <select id="rol" th:field="*{rol.id}"
+                            class="pl-10 pr-3 py-2 w-full rounded-lg border border-blue-200 focus:ring-2 focus:ring-blue-400 text-gray-700 shadow-sm transition appearance-none">
+                        <option th:each="rol:${roles}"
+                                th:value="${rol.id}"
+                                th:text="${rol.nombre}">
+                            Seleccione Rol
+                        </option>
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row gap-4 mt-6">
+                <button type="submit"
+                        class="w-full bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-bold py-2 rounded-lg shadow-lg transition transform hover:scale-105 duration-200">
+                    <i class="fa fa-save mr-2"></i> Guardar Usuario
+                </button>
+                <a th:href="@{/}"
+                   class="w-full bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-2 rounded-lg text-center shadow transition transform hover:scale-105 duration-200">
+                    <i class="fa fa-arrow-left mr-2"></i> Cancelar y Volver
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+</body>
+</html>

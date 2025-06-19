@@ -1,6 +1,5 @@
 package com.itsqmet.tiendaBeauty.Controller;
 
-import com.itsqmet.tiendaBeauty.Entity.Cliente;
 import com.itsqmet.tiendaBeauty.Entity.Producto;
 import com.itsqmet.tiendaBeauty.Entity.Proveedor;
 import com.itsqmet.tiendaBeauty.Service.ProductoServicio;
